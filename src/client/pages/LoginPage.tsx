@@ -1,8 +1,8 @@
 // src/pages/LoginPage.tsx
 import { useState, useEffect, ReactElement, FormEvent } from 'react';
 import { useNavigate, useLocation } from 'react-router';
-import MainLayout from '@/layouts/MainLayout';
-import { authenticate, isAuthenticated } from '@/services/AuthService';
+import MainLayout from '@/layouts/MainLayout.tsx';
+import { authenticate, isAuthenticated } from '@/common/services/AuthService.ts';
 
 export default function LoginPage(): ReactElement {
     const navigate = useNavigate();

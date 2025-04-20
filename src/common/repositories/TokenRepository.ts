@@ -1,6 +1,6 @@
 // src/repositories/TokenRepository.ts
-import { IPasswordGrant, IRefreshGrant, ITokenResponse } from '@/models/Token';
-import http from '@/utils/http';
+import { IPasswordGrant, IRefreshGrant, ITokenResponse } from '@/models/Token.ts';
+import http from '@/utils/http.ts';
 
 const clientId = import.meta.env.VITE_CLIENT_ID as string;
 const clientSecret = import.meta.env.VITE_CLIENT_SECRET as string;

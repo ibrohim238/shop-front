@@ -1,5 +1,5 @@
 // src/models/Cart.ts
-import { Product, IProduct } from '@/models/Product';
+import { Product, IProduct } from '@/models/Product.ts';
 
 export interface ICart {
     id: number;

@@ -1,19 +1,14 @@
-import http from '@/utils/http';
-import { ICart } from '@/models/Cart';
-import { IPagination, ISingleResponse } from '@/models/Pagination';
-
-export interface FetchCartsParams {
-    page: number;
-    per_page: number;
-    filter: string[];
-}
+import http from '@/utils/http.ts';
+import { ICart } from '@/models/Cart.ts';
+import { IPagination, ISingleResponse } from '@/models/Pagination.ts';
+import {FetchParams} from "@/types/Params.ts";
 
 export async function fetchCarts(
     page: number,
     per_page: number,
     filter: string[] = []
 ): Promise<IPagination<ICart>> {
-    const params: FetchCartsParams = { page, per_page, filter };
+    const params: FetchParams = { page, per_page, filter };
     const response = await http.get<IPagination<ICart>>(
         '/private/user/carts',
         { params }
@@ -39,4 +34,18 @@ export async function fetchRemoveFromCart(
     cartId: number
 ): Promise<void> {
     await http.delete(`/private/user/carts/${cartId}`);
+}
+
+/**
+ * Обновить количество в элементе корзины
+ */
+export async function fetchUpdateCartItem(
+    cartId: number,
+    quantity: number
+): Promise<ISingleResponse<ICart>> {
+    const response = await http.patch<ISingleResponse<ICart>>(
+        `/private/user/carts/${cartId}`,
+        { quantity }
+    );
+    return response.data;
 }

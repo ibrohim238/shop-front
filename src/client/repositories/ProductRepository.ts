@@ -1,20 +1,15 @@
 // src/repositories/ProductRepository.ts
-import http from '@/utils/http';
-import { IProduct } from '@/models/Product';
-import { IPagination, ISingleResponse } from '@/models/Pagination';
-
-export interface FetchProductsParams {
-    page: number;
-    per_page: number;
-    filter: string[];
-}
+import http from '@/utils/http.ts';
+import { IProduct } from '@/models/Product.ts';
+import { IPagination, ISingleResponse } from '@/models/Pagination.ts';
+import {FetchParams} from "@/types/Params.ts";
 
 export async function fetchProducts(
     page: number,
     per_page: number,
     filter: string[] = []
 ): Promise<IPagination<IProduct>> {
-    const params: FetchProductsParams = {
+    const params: FetchParams = {
         page,
         per_page,
         filter,

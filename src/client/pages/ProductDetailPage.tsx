@@ -1,10 +1,10 @@
 // src/pages/ProductDetailPage.tsx
 import { useState, useEffect, ReactElement } from 'react';
 import { useParams, Link, useNavigate } from 'react-router';
-import MainLayout from '@/layouts/MainLayout';
-import { getProductById } from '@/services/ProductService';
-import { addToCart } from '@/services/CartService';
-import type { Product } from '@/models/Product';
+import MainLayout from '@/layouts/MainLayout.tsx';
+import { getProductById } from '@/client/services/ProductService.ts';
+import { addToCart } from '@/client/services/CartService.ts';
+import type { Product } from '@/models/Product.ts';
 
 export default function ProductDetailPage(): ReactElement {
     const { id } = useParams<{ id: string }>();
