@@ -1,25 +1,24 @@
 // src/components/ErrorComponent.tsx
-import type { ReactElement } from 'react';
-import { Link } from 'react-router';
+import { ReactElement } from 'react';
 
 interface ErrorComponentProps {
+    /** Сообщение об ошибке */
     message: string;
-    backUrl?: string;
-    backText?: string;
+    /** Callback для повторной попытки действия */
+    onRetry?: () => void;
 }
 
-export default function ErrorComponent({
-                                           message,
-                                           backUrl,
-                                           backText = '← Назад',
-                                       }: ErrorComponentProps): ReactElement {
+export default function ErrorComponent({ message, onRetry }: ErrorComponentProps): ReactElement {
     return (
-        <div className="p-6 text-center">
-            <p className="text-red-500 mb-4">{message}</p>
-            {backUrl && (
-                <Link to={backUrl} className="text-blue-600 hover:underline">
-                    {backText}
-                </Link>
+        <div className="p-6">
+            <p className="text-red-500">{message}</p>
+            {onRetry && (
+                <button
+                    onClick={onRetry}
+                    className="mt-4 px-4 py-2 bg-gray-300 rounded hover:bg-gray-400"
+                >
+                    Повторить
+                </button>
             )}
         </div>
     );

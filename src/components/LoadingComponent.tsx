@@ -1,9 +1,9 @@
 // src/components/LoadingComponent.tsx
-import type { ReactElement } from 'react';
+import { ReactElement } from 'react';
 
 export default function LoadingComponent(): ReactElement {
     return (
-        <div className="p-6 text-center">
+        <div className="flex items-center justify-center h-64">
             <span className="text-gray-500">Загрузка...</span>
         </div>
     );
