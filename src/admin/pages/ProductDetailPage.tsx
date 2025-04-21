@@ -31,9 +31,6 @@ export default function AdminProductDetailPage(): ReactElement {
             </div>
         );
     }
-    if (!product) {
-        return null;
-    }
 
     return (
         <div className="container mx-auto p-6">
