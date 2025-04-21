@@ -1,7 +1,6 @@
 // src/pages/OrderDetailPage.tsx
 import { useState, useEffect, ReactElement } from 'react';
 import { useParams, Link } from 'react-router';
-import MainLayout from '@/layouts/MainLayout.tsx';
 import { getOrderById } from '@/client/services/OrderService.ts';
 import type { Order } from '@/models/Order.ts';
 
@@ -25,28 +24,24 @@ export default function OrderDetailPage(): ReactElement {
 
     if (loading) {
         return (
-            <MainLayout>
-                <div className="flex items-center justify-center h-64">
-                    <span className="text-gray-500">Загрузка заказа...</span>
-                </div>
-            </MainLayout>
+            <div className="flex items-center justify-center h-64">
+                <span className="text-gray-500">Загрузка заказа...</span>
+            </div>
         );
     }
 
     if (error || !order) {
         return (
-            <MainLayout>
-                <div className="container mx-auto p-6">
-                    <p className="text-red-500 text-center">
-                        {error ?? 'Заказ не найден'}
-                    </p>
-                </div>
-            </MainLayout>
+            <div className="container mx-auto p-6">
+                <p className="text-red-500 text-center">
+                    {error ?? 'Заказ не найден'}
+                </p>
+            </div>
         );
     }
 
     return (
-        <MainLayout>
+        <>
             <div className="container mx-auto p-6">
                 <Link
                     to="/orders"
@@ -132,6 +127,6 @@ export default function OrderDetailPage(): ReactElement {
                     </div>
                 </div>
             </div>
-        </MainLayout>
+        </>
     );
 }

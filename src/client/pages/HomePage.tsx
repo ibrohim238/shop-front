@@ -1,7 +1,6 @@
 // src/pages/HomePage.tsx
 import { useState, useEffect, ReactElement } from 'react';
 import { Link, useSearchParams } from 'react-router';
-import MainLayout from '@/layouts/MainLayout.tsx';
 import Paginator from '@/components/Paginator.tsx';
 import SidebarCategories from '@/components/SidebarCategories.tsx';
 import { getProducts } from '@/client/services/ProductService.ts';
@@ -41,16 +40,14 @@ export default function HomePage(): ReactElement {
 
     if (loading) {
         return (
-            <MainLayout>
-                <div className="flex items-center justify-center h-screen">
-                    <span className="text-gray-500">Загрузка...</span>
-                </div>
-            </MainLayout>
+            <div className="flex items-center justify-center h-screen">
+                <span className="text-gray-500">Загрузка...</span>
+            </div>
         );
     }
 
     return (
-        <MainLayout>
+        <>
             <div className="container mx-auto p-6 flex gap-6">
                 {/* Левая панель фильтра по категориям */}
                 <SidebarCategories />
@@ -106,6 +103,6 @@ export default function HomePage(): ReactElement {
                     )}
                 </div>
             </div>
-        </MainLayout>
+        </>
     );
 }

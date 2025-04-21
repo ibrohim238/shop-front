@@ -1,7 +1,7 @@
 // src/services/AuthService.ts
 import { login as loginRequest, refreshToken as refreshRequest, logout as logoutRequest } from '@/common/repositories/TokenRepository.ts';
 import { register as registerRequest } from '@/common/repositories/RegisterRepository.ts';
-import {RegisterDto} from "@/dtos/RegisterDto.ts";
+import {RegisterDto} from "@/client/dtos/RegisterDto.ts";
 import {User} from "@/models/User.ts";
 
 export async function authenticate(username: string, password: string): Promise<void> {

@@ -1,7 +1,11 @@
-import type { ReactElement } from 'react';
-import { Link, Outlet } from 'react-router';
+import type {ReactElement, ReactNode} from 'react';
+import { Link } from 'react-router';
 
-export default function AdminLayout(): ReactElement {
+interface AdminLayoutProps {
+    children: ReactNode;
+}
+
+export default function AdminLayout({ children }: AdminLayoutProps ): ReactElement {
     return (
         <div className="min-h-screen bg-gray-100">
             {/* Админ-хедер */}
@@ -24,7 +28,7 @@ export default function AdminLayout(): ReactElement {
 
             {/* Основной контент */}
             <main className="container mx-auto px-6 py-8">
-                <Outlet />
+                {children}
             </main>
         </div>
     );

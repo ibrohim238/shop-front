@@ -1,7 +1,12 @@
+// src/common/repositories/MediaRepository.ts
 import http from '@/utils/http';
 import { IMedia } from '@/models/Media';
-import { IPagination } from '@/models/Pagination';
+import { IPagination, ISingleResponse } from '@/models/Pagination';
 import { FetchParams } from '@/types/Params';
+
+export interface IStoreMediaResponse {
+    data: IMedia[];
+}
 
 /**
  * Получить список медиа-файлов пользователя (пагинация + фильтры)
@@ -19,5 +24,27 @@ export async function fetchMedia(
         '/private/user/media',
         { params }
     );
+    return response.data;
+}
+
+/**
+ * Загрузить один или несколько файлов медиа.
+ * @param files — массив объектов File или Blob
+ * @returns массив созданных записей IMedia
+ */
+export async function storeMedia(
+    files: File[]
+): Promise<ISingleResponse<IMedia[]>> {
+    const formData = new FormData();
+    files.forEach(file => formData.append('media[]', file));
+
+    const response = await http.post<ISingleResponse<IMedia[]>>(
+        '/private/user/media',
+        formData,
+        {
+            headers: { 'Content-Type': 'multipart/form-data' }
+        }
+    );
+
     return response.data;
 }

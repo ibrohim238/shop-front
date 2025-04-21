@@ -1,8 +1,7 @@
 // src/pages/RegisterPage.tsx
 import { useState, ReactElement, FormEvent } from 'react';
 import { useNavigate } from 'react-router';
-import MainLayout from '@/layouts/MainLayout.tsx';
-import { RegisterDto } from '@/dtos/RegisterDto.ts';
+import { RegisterDto } from '@/client/dtos/RegisterDto.ts';
 import { register as registerService } from '@/common/services/AuthService.ts';
 
 export default function RegisterPage(): ReactElement {
@@ -37,7 +36,7 @@ export default function RegisterPage(): ReactElement {
     };
 
     return (
-        <MainLayout>
+        <>
             <div className="max-w-md mx-auto p-6 bg-white shadow rounded">
                 <h1 className="text-2xl font-semibold mb-4">Регистрация</h1>
                 {error && <p className="text-red-500 mb-4 text-center">{error}</p>}
@@ -106,6 +105,6 @@ export default function RegisterPage(): ReactElement {
                     </button>
                 </form>
             </div>
-        </MainLayout>
+        </>
     );
 }

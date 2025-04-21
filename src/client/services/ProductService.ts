@@ -7,7 +7,7 @@ import {FilterParams} from "@/types/Params.ts";
 export async function getProducts(
     page = 1,
     limit = 15,
-    filter: FilterParams = {}
+    filter: FilterParams = {},
 ): Promise<Pagination<Product>> {
     const flatFilter: string[] = [];
     for (const [key, value] of Object.entries(filter)) {

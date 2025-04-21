@@ -1,7 +1,6 @@
 // src/pages/CartPage.tsx
 import { useState, useEffect, ReactElement } from 'react';
 import { Link, useNavigate } from 'react-router';
-import MainLayout from '@/layouts/MainLayout.tsx';
 import Paginator from '@/components/Paginator.tsx';
 import {
     getCarts,
@@ -90,28 +89,22 @@ export default function CartPage(): ReactElement {
     }, []);
 
     if (loading) return (
-        <MainLayout>
-            <div className="flex items-center justify-center h-64">
-                <span className="text-gray-500">Загрузка корзины...</span>
-            </div>
-        </MainLayout>
+        <div className="flex items-center justify-center h-64">
+            <span className="text-gray-500">Загрузка корзины...</span>
+        </div>
     );
 
     if (error) return (
-        <MainLayout>
-            <div className="container mx-auto p-6">
-                <p className="text-red-500 text-center">{error}</p>
-            </div>
-        </MainLayout>
+        <div className="container mx-auto p-6">
+            <p className="text-red-500 text-center">{error}</p>
+        </div>
     );
 
     if (!meta || items.length === 0) return (
-        <MainLayout>
-            <div className="container mx-auto p-6">
-                <h1 className="text-3xl font-semibold mb-6">Ваша корзина</h1>
-                <p className="text-gray-600">Корзина пуста.</p>
-            </div>
-        </MainLayout>
+        <div className="container mx-auto p-6">
+            <h1 className="text-3xl font-semibold mb-6">Ваша корзина</h1>
+            <p className="text-gray-600">Корзина пуста.</p>
+        </div>
     );
 
     const total = items
@@ -119,7 +112,7 @@ export default function CartPage(): ReactElement {
         .reduce((sum, item) => sum + item.product.price * item.quantity, 0);
 
     return (
-        <MainLayout>
+        <>
             <div className="container mx-auto p-6">
                 <div className="flex items-center justify-between mb-4">
                     <h1 className="text-3xl font-semibold">Ваша корзина</h1>
@@ -210,6 +203,6 @@ export default function CartPage(): ReactElement {
                     <Paginator currentPage={currentPage} lastPage={meta.last_page} onPageChange={loadPage}/>
                 </div>
             </div>
-        </MainLayout>
+        </>
     );
 }

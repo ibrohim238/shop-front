@@ -1,4 +1,5 @@
 import {IMedia, Media} from '@/models/Media.ts';
+import {Category, ICategory} from "@/models/Category.ts";
 
 export interface IProduct {
     id: number;
@@ -7,6 +8,7 @@ export interface IProduct {
     price: number;
     quantity: number | null;
     medias: IMedia[];
+    categories: ICategory[] | null;
     created_at: string;
     updated_at: string;
 }
@@ -19,6 +21,7 @@ export class Product {
         public readonly price: number,
         public readonly quantity: number | null,
         public readonly medias: Media[],
+        public readonly categories: Category[] | null,
         public readonly created_at: Date,
         public readonly updated_at: Date
     ) {}
@@ -31,6 +34,7 @@ export class Product {
             data.price,
             data.quantity,
             data.medias.map(Media.fromData),
+            data.categories?.map(Category.fromData) || null,
             new Date(data.created_at),
             new Date(data.updated_at)
         );

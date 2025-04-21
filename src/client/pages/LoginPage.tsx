@@ -1,7 +1,6 @@
 // src/pages/LoginPage.tsx
 import { useState, useEffect, ReactElement, FormEvent } from 'react';
 import { useNavigate, useLocation } from 'react-router';
-import MainLayout from '@/layouts/MainLayout.tsx';
 import { authenticate, isAuthenticated } from '@/common/services/AuthService.ts';
 
 export default function LoginPage(): ReactElement {
@@ -36,7 +35,7 @@ export default function LoginPage(): ReactElement {
     };
 
     return (
-        <MainLayout>
+        <>
             <div className="max-w-sm mx-auto p-6 bg-white shadow rounded">
                 <h1 className="text-2xl font-semibold mb-4">Вход</h1>
                 {error && <p className="text-red-500 mb-4 text-center">{error}</p>}
@@ -72,6 +71,6 @@ export default function LoginPage(): ReactElement {
                     </button>
                 </form>
             </div>
-        </MainLayout>
+        </>
     );
 }

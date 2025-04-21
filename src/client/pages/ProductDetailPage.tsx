@@ -1,7 +1,6 @@
 // src/pages/ProductDetailPage.tsx
 import { useState, useEffect, ReactElement } from 'react';
 import { useParams, Link, useNavigate } from 'react-router';
-import MainLayout from '@/layouts/MainLayout.tsx';
 import { getProductById } from '@/client/services/ProductService.ts';
 import { addToCart } from '@/client/services/CartService.ts';
 import type { Product } from '@/models/Product.ts';
@@ -36,26 +35,22 @@ export default function ProductDetailPage(): ReactElement {
 
     if (loading) {
         return (
-            <MainLayout>
-                <div className="flex items-center justify-center h-64">
-                    <span className="text-gray-500">Загрузка...</span>
-                </div>
-            </MainLayout>
+            <div className="flex items-center justify-center h-64">
+                <span className="text-gray-500">Загрузка...</span>
+            </div>
         );
     }
 
     if (error || !product) {
         return (
-            <MainLayout>
-                <div className="container mx-auto p-6">
-                    <p className="text-red-500 text-center">{error ?? 'Продукт не найден'}</p>
-                </div>
-            </MainLayout>
+            <div className="container mx-auto p-6">
+                <p className="text-red-500 text-center">{error ?? 'Продукт не найден'}</p>
+            </div>
         );
     }
 
     return (
-        <MainLayout>
+        <>
             <div className="container mx-auto p-6">
                 <Link
                     to="/"
@@ -127,6 +122,6 @@ export default function ProductDetailPage(): ReactElement {
                     </div>
                 </div>
             </div>
-        </MainLayout>
+        </>
     );
 }
