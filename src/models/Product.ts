@@ -19,7 +19,7 @@ export class Product {
         public readonly name: string,
         public readonly description: string,
         public readonly price: number,
-        public readonly quantity: number | null,
+        public readonly quantity: number,
         public readonly medias: Media[],
         public readonly categories: Category[] | null,
         public readonly created_at: Date,

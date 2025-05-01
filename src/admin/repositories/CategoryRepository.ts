@@ -2,7 +2,7 @@
 import http from '@/utils/http.ts';
 import { ICategory } from '@/models/Category.ts';
 import { IPagination, ISingleResponse } from '@/models/Pagination.ts';
-import { FetchParams } from "@/types/Params.ts";
+import {FilterParams} from "@/types/Params.ts";
 
 /**
  * Получить список категорий с пагинацией.
@@ -10,12 +10,14 @@ import { FetchParams } from "@/types/Params.ts";
 export async function fetchCategories(
     page: number,
     per_page: number,
-    filter: string[] = []
+    filter: FilterParams = {}
 ): Promise<IPagination<ICategory>> {
-    const params: FetchParams = { page, per_page, filter };
+    const params: FilterParams = { page, per_page, ...filter };
     const response = await http.get<IPagination<ICategory>>(
-        '/private/categories',
-        { params }
+        '/private/admin/categories',
+        {
+            params: params,
+        }
     );
     return response.data;
 }
@@ -27,7 +29,7 @@ export async function fetchCategoryById(
     id: number
 ): Promise<ISingleResponse<ICategory>> {
     const response = await http.get<ISingleResponse<ICategory>>(
-        `/private/categories/${id}`
+        `/private/admin/categories/${id}`
     );
     return response.data;
 }

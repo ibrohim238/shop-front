@@ -1,17 +1,19 @@
 // src/admin/components/ProductDetailCard.tsx
 import type { ReactElement } from 'react';
-import type { Product } from '@/models/Product';
+import type { Product } from '@/models/Product.ts';
 
 interface Props {
     product: Product;
 }
 
-export default function ProductDetailCard({ product }: Props): ReactElement {
+export default function CardProduct({ product }: Props): ReactElement {
     return (
         <div className="bg-white shadow rounded-lg p-6 space-y-4">
-            <h1 className="text-2xl font-semibold mb-2">
-                Товар #{product.id}: {product.name}
-            </h1>
+            <div className="flex justify-between items-center">
+                <h1 className="text-2xl font-semibold">
+                    Товар #{product.id}: {product.name}
+                </h1>
+            </div>
             <div>
                 <h2 className="text-sm text-gray-500">Описание</h2>
                 <p className="text-gray-800">{product.description}</p>

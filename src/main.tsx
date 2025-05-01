@@ -3,7 +3,6 @@ import { BrowserRouter, Routes, Route, Outlet } from 'react-router';
 import HomePage from '@/client/pages/HomePage';
 import СlientProductDetailPage from '@/client/pages/ProductDetailPage';
 
-import AdminProductDetailPage from '@/admin/pages/ProductDetailPage';
 import CartPage from '@/client/pages/CartPage';
 import OrdersPage from '@/client/pages/OrdersPage';
 import OrderDetailPage from '@/client/pages/OrderDetailPage';
@@ -17,6 +16,7 @@ import ProductsPage from '@/admin/pages/ProductsPage';
 import CouponsPage from '@/admin/pages/CouponsPage';
 import CategoriesPage from '@/admin/pages/CategoriesPage';
 import '@/index.css';
+import AdminProductDetailPage from "@/admin/pages/ProductDetailPage/ProductDetailPage.tsx";
 
 function PublicRoutes() {
     return (

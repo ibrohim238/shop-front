@@ -1,7 +1,7 @@
 // src/admin/hooks/useProductDetail.ts
 import { useState, useEffect } from 'react';
-import { getProductById } from '@/admin/services/ProductService';
-import type { Product } from '@/models/Product';
+import { getProductById } from '@/admin/services/ProductService.ts';
+import type { Product } from '@/models/Product.ts';
 
 export function useProductDetail(productId: number) {
     const [product, setProduct] = useState<Product | null>(null);
@@ -23,5 +23,5 @@ export function useProductDetail(productId: number) {
             .finally(() => setLoading(false));
     }, [productId]);
 
-    return { product, loading, error } as const;
+    return { product, setProduct, loading, error } as const;
 }
