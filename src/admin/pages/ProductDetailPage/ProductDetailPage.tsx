@@ -5,7 +5,7 @@ import CardProduct from '@/admin/pages/ProductDetailPage/CardProduct.tsx';
 import LoadingComponent from '@/components/LoadingComponent.tsx';
 import ErrorComponent from '@/components/ErrorComponent.tsx';
 import { useProductDetail } from '@/admin/pages/ProductDetailPage/useProductDetail.ts';
-import FormProduct from "@/admin/pages/ProductDetailPage/FormProduct.tsx";
+import FormProduct from "@/admin/pages/ProductDetailPage/Form/FormProduct.tsx";
 import {Product} from "@/models/Product.ts";
 
 export default function AdminProductDetailPage(): ReactElement {

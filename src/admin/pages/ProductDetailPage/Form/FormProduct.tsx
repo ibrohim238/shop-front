@@ -9,7 +9,7 @@ import {ProductDto} from "@/admin/dtos/ProductDto.ts";
 import {updateProduct} from "@/admin/services/ProductService.ts";
 import FileUpload from "@/components/FileUpload.tsx";
 import MultiSelect from "@/components/MultiSelect.tsx";
-import {useCategories} from "@/admin/hooks/useCategories.ts";
+import {useCategories} from "@/admin/pages/ProductDetailPage/Form/useCategories.ts";
 
 interface Props {
     product: Product;
@@ -87,7 +87,9 @@ export default function FormProduct({
                     productForm.price,
                     productForm.quantity,
                     mediaIds,
-                    productForm.categories || [],
+                    productForm.categories.length === 0
+                        ? null
+                        : productForm.categories,
                 ),
             );
 
