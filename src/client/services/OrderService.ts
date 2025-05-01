@@ -20,9 +20,11 @@ export async function getOrders(
     per_page = 15,
     filter: FilterParams = {}
 ): Promise<Pagination<Order>> {
-    const filterParams = Object.entries(filter).map(
-        ([key, value]) => `filter[${key}]=${value}`
-    );
+    const filterParams = Object.entries(filter).reduce((acc, [key, value]) => {
+        acc[`filter[${key}]`] = value;
+        return acc;
+    }, {} as FilterParams);
+
     const {data, meta} = await fetchOrders(page, per_page, filterParams);
 
     return Pagination.fromData({

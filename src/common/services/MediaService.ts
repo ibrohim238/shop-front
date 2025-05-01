@@ -16,9 +16,10 @@ export async function getMedia(
     filter: FilterParams = {}
 ): Promise<Pagination<Media>> {
     // Преобразуем фильтры в массив строк вида "filter[field]=value"
-    const filterParams = Object.entries(filter).map(
-        ([key, value]) => `filter[${key}]=${value}`
-    );
+    const filterParams = Object.entries(filter).reduce((acc, [key, value]) => {
+        acc[`filter[${key}]`] = value;
+        return acc;
+    }, {} as FilterParams);
 
     // Вызываем репозиторий
     const { data: rawData, meta: rawMeta } = await fetchMedia(

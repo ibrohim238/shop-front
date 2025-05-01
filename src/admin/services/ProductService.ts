@@ -13,9 +13,11 @@ export async function getProducts(
     per_page = 15,
     filter: FilterParams = {}
 ): Promise<Pagination<Product>> {
-    const filterParams = Object.entries(filter).map(
-        ([key, value]) => `filter[${key}]=${value}`
-    );
+    const filterParams = Object.entries(filter).reduce((acc, [key, value]) => {
+        acc[`filter[${key}]`] = value;
+        return acc;
+    }, {} as FilterParams);
+
     const { data: rawData, meta: rawMeta } = await fetchProducts(
         page,
         per_page,

@@ -2,17 +2,17 @@
 import http from '@/utils/http.ts';
 import { IProduct } from '@/models/Product.ts';
 import { IPagination, ISingleResponse } from '@/models/Pagination.ts';
-import {FetchParams} from "@/types/Params.ts";
+import {FilterParams} from "@/types/Params.ts";
 
 export async function fetchProducts(
     page: number,
     per_page: number,
-    filter: string[] = []
+    filter: FilterParams = {}
 ): Promise<IPagination<IProduct>> {
-    const params: FetchParams = {
+    const params: FilterParams = {
         page,
         per_page,
-        filter,
+        ...filter,
     };
 
     const response = await http.get<IPagination<IProduct>>(

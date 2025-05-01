@@ -12,9 +12,11 @@ export async function getCarts(
     per_page = 15,
     filter: FilterParams = {}
 ): Promise<Pagination<Cart>> {
-    const filterParams = Object.entries(filter).map(
-        ([key, value]) => `filter[${key}]=${value}`
-    );
+    const filterParams = Object.entries(filter).reduce((acc, [key, value]) => {
+        acc[`filter[${key}]`] = value;
+        return acc;
+    }, {} as FilterParams);
+
     const { data, meta } = await fetchCarts(page, per_page, filterParams);
     return Pagination.fromData({
         data: data.map((item: ICart) => Cart.fromData(item)),

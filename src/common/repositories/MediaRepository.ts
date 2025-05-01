@@ -2,7 +2,7 @@
 import http from '@/utils/http';
 import { IMedia } from '@/models/Media';
 import { IPagination, ISingleResponse } from '@/models/Pagination';
-import { FetchParams } from '@/types/Params';
+import { FilterParams } from '@/types/Params';
 
 export interface IStoreMediaResponse {
     data: IMedia[];
@@ -17,9 +17,9 @@ export interface IStoreMediaResponse {
 export async function fetchMedia(
     page = 1,
     per_page = 15,
-    filter: string[] = []
+    filter: FilterParams = {}
 ): Promise<IPagination<IMedia>> {
-    const params: FetchParams = { page, per_page, filter };
+    const params: FilterParams = { page, per_page, ...filter };
     const response = await http.get<IPagination<IMedia>>(
         '/private/user/media',
         { params }

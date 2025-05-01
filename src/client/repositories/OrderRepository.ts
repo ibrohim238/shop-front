@@ -2,7 +2,7 @@
 import http from '@/utils/http.ts';
 import { IOrder } from '@/models/Order.ts';
 import { IPagination, ISingleResponse } from '@/models/Pagination.ts';
-import {FetchParams} from "@/types/Params.ts";
+import {FilterParams} from "@/types/Params.ts";
 
 export interface ICreateOrderPayload {
     carts: number[];
@@ -15,9 +15,9 @@ export interface ICreateOrderPayload {
 export async function fetchOrders(
     page: number,
     per_page: number,
-    filter: string[] = []
+    filter: FilterParams = {}
 ): Promise<IPagination<IOrder>> {
-    const params: FetchParams = { page, per_page, filter };
+    const params: FilterParams = { page, per_page, ...filter };
     const response = await http.get<IPagination<IOrder>>(
         '/private/user/orders',
         { params }

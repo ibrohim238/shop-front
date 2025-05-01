@@ -9,15 +9,15 @@ export async function getProducts(
     limit = 15,
     filter: FilterParams = {},
 ): Promise<Pagination<Product>> {
-    const flatFilter: string[] = [];
-    for (const [key, value] of Object.entries(filter)) {
-        flatFilter.push(`filter[${key}]= ${value}`);
-    }
+    const filterParams = Object.entries(filter).reduce((acc, [key, value]) => {
+        acc[`filter[${key}]`] = value;
+        return acc;
+    }, {} as FilterParams);
 
     const { data, meta }: IPagination<IProduct> = await fetchProducts(
         page,
         limit,
-        flatFilter,
+        filterParams,
     );
 
     return Pagination.fromData({

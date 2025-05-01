@@ -2,15 +2,15 @@
 import http from '@/utils/http';
 import { IProduct } from '@/models/Product';
 import { ISingleResponse, IPagination } from '@/models/Pagination';
-import { FetchParams } from '@/types/Params';
+import {FilterParams} from '@/types/Params';
 import { ProductDto } from '@/admin/dtos/ProductDto';
 
 export async function fetchProducts(
     page: number,
     per_page: number,
-    filter: string[] = []
+    filter: FilterParams = {}
 ): Promise<IPagination<IProduct>> {
-    const params: FetchParams = { page, per_page, filter };
+    const params: FilterParams = { page, per_page, ...filter };
     const { data } = await http.get<IPagination<IProduct>>(
         '/private/admin/products',
         { params }
