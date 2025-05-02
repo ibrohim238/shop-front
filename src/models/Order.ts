@@ -5,25 +5,28 @@ import { Coupon, ICoupon } from '@/models/Coupon.ts';
 export interface IOrderItem {
     product: IProduct;
     quantity: number;
+    total_amount: number;
 }
 
 export class OrderItem {
     constructor(
         public readonly product: Product,
-        public readonly quantity: number
+        public readonly quantity: number,
+        public readonly total_amount: number,
     ) {}
 
     public static fromData(data: IOrderItem): OrderItem {
         return new OrderItem(
             Product.fromData(data.product),
-            data.quantity
+            data.quantity,
+            data.total_amount,
         );
     }
 }
 
 export interface IOrder {
     id: number;
-    amount: number;
+    total_amount: number;
     status: string;
     items: IOrderItem[];
     coupon?: ICoupon;
@@ -34,7 +37,7 @@ export interface IOrder {
 export class Order {
     constructor(
         public readonly id: number,
-        public readonly amount: number,
+        public readonly total_amount: number,
         public readonly status: string,
         public readonly items: OrderItem[],
         public readonly coupon: Coupon | null,
@@ -45,7 +48,7 @@ export class Order {
     public static fromData(data: IOrder): Order {
         return new Order(
             data.id,
-            data.amount,
+            data.total_amount,
             data.status,
             data.items.map(OrderItem.fromData),
             data.coupon ? Coupon.fromData(data.coupon) : null,

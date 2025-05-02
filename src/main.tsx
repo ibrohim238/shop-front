@@ -3,8 +3,8 @@ import { BrowserRouter, Routes, Route, Outlet } from 'react-router';
 import HomePage from '@/client/pages/HomePage';
 import СlientProductDetailPage from '@/client/pages/ProductDetailPage';
 import CartPage from '@/client/pages/CartPage';
-import OrdersPage from '@/client/pages/OrdersPage';
-import OrderDetailPage from '@/client/pages/OrderDetailPage';
+import ClientOrdersPage from '@/client/pages/OrdersPage';
+import ClientOrderDetailPage from '@/client/pages/OrderDetailPage';
 import LoginPage from '@/client/pages/LoginPage';
 import RegisterPage from '@/client/pages/RegisterPage';
 import RequireAuth from '@/routes/RequireAuth';
@@ -21,6 +21,8 @@ import CouponCreatePage from "@/admin/pages/Coupons/CouponCreatePage/CouponCreat
 import CouponDetailPage from "@/admin/pages/Coupons/CouponDetailPage/CouponDetailPage.tsx";
 import CategoryCreatePage from "@/admin/pages/Categories/CategoryCreatePage/CategoryCreatePage.tsx";
 import CategoryDetailPage from "@/admin/pages/Categories/CategoryDetailPage/CategoryDetailPage.tsx";
+import AdminOrdersPage from "@/admin/pages/Orders/OrdersPage.tsx";
+import AdminOrdersDetailsPage from "@/admin/pages/Orders/OrderDetailPage/OrderDetailPage.tsx";
 
 function PublicRoutes() {
     return (
@@ -61,8 +63,8 @@ ReactDOM.createRoot(document.getElementById('root') as HTMLElement).render(
                 {/* Всё, что требует логина */}
                 <Route element={<ProtectedRoutes />}>
                     <Route path="cart" element={<CartPage />} />
-                    <Route path="orders" element={<OrdersPage />} />
-                    <Route path="orders/:id" element={<OrderDetailPage />} />
+                    <Route path="orders" element={<ClientOrdersPage />} />
+                    <Route path="orders/:id" element={<ClientOrderDetailPage />} />
                 </Route>
             </Route>
 
@@ -82,6 +84,8 @@ ReactDOM.createRoot(document.getElementById('root') as HTMLElement).render(
                 <Route path="categories" element={<CategoriesPage />} />
                 <Route path="categories/new" element={<CategoryCreatePage />} />
                 <Route path="categories/:slug" element={<CategoryDetailPage />} />
+                <Route path="orders" element={<AdminOrdersPage />} />
+                <Route path="orders/:id" element={<AdminOrdersDetailsPage />} />
             </Route>
         </Routes>
     </BrowserRouter>

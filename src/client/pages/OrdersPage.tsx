@@ -22,7 +22,8 @@ export default function OrdersPage(): ReactElement {
                 setMeta(paginated.meta);
                 setCurrentPage(page);
             })
-            .catch(() => {
+            .catch((e) => {
+                console.log(e);
                 setError('Не удалось загрузить заказы');
             })
             .finally(() => {
@@ -73,7 +74,7 @@ export default function OrdersPage(): ReactElement {
                             <p className="text-gray-600">Статус: {order.status}</p>
                             <p className="text-gray-600">
                                 Сумма:{' '}
-                                {order.amount.toLocaleString('ru-RU', {
+                                {order.total_amount.toLocaleString('ru-RU', {
                                     style: 'currency',
                                     currency: 'RUB',
                                 })}

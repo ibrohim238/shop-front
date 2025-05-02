@@ -50,7 +50,7 @@ export default function SelectComponent<T>({
   // Загружаем опции при изменении строки поиска
   useEffect(() => {
     setLoading(true);
-    loadOptions(search, [], { page: 1 })
+    loadOptions(search, [], { page })
       .then(result => {
         setAsyncOptions(result.options);
         setPage(result.additional.page);
@@ -59,7 +59,7 @@ export default function SelectComponent<T>({
         setAsyncOptions([]);
       })
       .finally(() => setLoading(false));
-  }, [search, loadOptions]);
+  }, [page, search, loadOptions]);
 
   // Находим выбранную опцию по значению
   const selectedOption = asyncOptions.find(opt => 

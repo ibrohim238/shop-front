@@ -52,7 +52,7 @@ export default function MultiSelectComponent<T>({
   useEffect(() => {
     setLoading(true);
     // Начинаем с первой страницы, заменяя текущие опции
-    loadOptions(search, [], { page: 1 })
+    loadOptions(search, [], { page })
       .then(result => {
         setAsyncOptions(result.options);
         setPage(result.additional.page);
@@ -61,7 +61,7 @@ export default function MultiSelectComponent<T>({
         setAsyncOptions([]);
       })
       .finally(() => setLoading(false));
-  }, [search, loadOptions]);
+  }, [page, search, loadOptions]);
 
   /** Отображаемый текст кнопки */
   const buttonText = selected.length ? `${selected.length} выбрано` : placeholder;

@@ -3,10 +3,11 @@ import http from '@/utils/http.ts';
 import { IOrder } from '@/models/Order.ts';
 import { IPagination, ISingleResponse } from '@/models/Pagination.ts';
 import {FilterParams} from "@/types/Params.ts";
+import {IPreview} from "@/models/Preview.ts";
 
 export interface ICreateOrderPayload {
     carts: number[];
-    coupon_code?: string;
+    coupon_code: string|null;
 }
 
 /**
@@ -45,6 +46,16 @@ export async function createOrder(
 ): Promise<ISingleResponse<IOrder>> {
     const response = await http.post<ISingleResponse<IOrder>>(
         '/private/user/orders',
+        payload
+    );
+    return response.data;
+}
+
+export async function orderPreview(
+    payload: ICreateOrderPayload
+): Promise<ISingleResponse<IPreview>> {
+    const response = await http.post<ISingleResponse<IPreview>>(
+        '/private/user/orders/preview',
         payload
     );
     return response.data;

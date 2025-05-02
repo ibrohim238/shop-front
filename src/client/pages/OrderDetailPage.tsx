@@ -57,7 +57,7 @@ export default function OrderDetailPage(): ReactElement {
                     </p>
                     <p className="mb-4">
                         <span className="font-medium">Сумма:</span>{' '}
-                        {order.amount.toLocaleString('ru-RU', {
+                        {order.total_amount.toLocaleString('ru-RU', {
                             style: 'currency',
                             currency: 'RUB',
                         })}

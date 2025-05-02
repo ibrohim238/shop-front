@@ -1,4 +1,3 @@
-// src/pages/CartPage.tsx
 import { useState, useEffect, ReactElement } from 'react';
 import { Link, useNavigate } from 'react-router';
 import PaginatorComponent from '@/components/PaginatorComponent.tsx';
@@ -7,7 +6,7 @@ import {
     removeFromCart,
     updateCartItem
 } from '@/client/services/CartService.ts';
-import { createOrder } from '@/client/services/OrderService.ts';
+import { createOrder, previewOrder } from '@/client/services/OrderService.ts';
 import type { Cart } from '@/models/Cart.ts';
 import type { PaginationMeta } from '@/models/Pagination.ts';
 
@@ -22,6 +21,11 @@ export default function CartPage(): ReactElement {
     const [ordering, setOrdering] = useState(false);
 
     const [selectedIds, setSelectedIds] = useState<number[]>([]);
+    // Состояния для промокода
+    const [promoCode, setPromoCode] = useState('');
+    const [promoError, setPromoError] = useState('');
+    // Итоговая сумма заказа, получаемая с бэка
+    const [totalAmount, setTotalAmount] = useState<number>(0);
 
     const loadPage = (page: number) => {
         setLoading(true);
@@ -48,10 +52,7 @@ export default function CartPage(): ReactElement {
         }
     };
 
-    const handleQuantityChange = async (
-        cartId: number,
-        newQty: number
-    ) => {
+    const handleQuantityChange = async (cartId: number, newQty: number) => {
         if (newQty < 1) return;
         try {
             const updated = await updateCartItem(cartId, newQty);
@@ -69,13 +70,32 @@ export default function CartPage(): ReactElement {
             prev.includes(id) ? prev.filter(x => x !== id) : [...prev, id]
         );
 
+    // При изменении выбранных товаров или промокода обновляем предпросмотр заказа
+    useEffect(() => {
+        if (selectedIds.length === 0) {
+            setTotalAmount(0);
+            return;
+        }
+        previewOrder(
+            selectedIds,
+            promoCode.trim() ? promoCode.trim() : null,
+        )
+            .then(preview => {
+                setTotalAmount(preview.amount);
+            })
+            .catch(() => {
+                setPromoError('Ошибка при получении предпросмотра заказа');
+                // Опционально можно оставить предыдущее totalAmount или сбросить
+            });
+    }, [selectedIds, promoCode]);
+
     const handleCreateOrder = async () => {
         const cartIds = items.filter(i => selectedIds.includes(i.id)).map(i => i.id);
         if (cartIds.length === 0) return;
         setOrdering(true);
         setError(null);
         try {
-            const order = await createOrder(cartIds);
+            const order = await createOrder(cartIds, promoCode);
             navigate(`/orders/${order.id}`);
         } catch {
             setError('Не удалось оформить заказ');
@@ -106,10 +126,6 @@ export default function CartPage(): ReactElement {
             <p className="text-gray-600">Корзина пуста.</p>
         </div>
     );
-
-    const total = items
-        .filter(item => selectedIds.includes(item.id))
-        .reduce((sum, item) => sum + item.product.price * item.quantity, 0);
 
     return (
         <>
@@ -170,11 +186,11 @@ export default function CartPage(): ReactElement {
                                         >＋</button>
                                     </div>
                                     <span className="font-bold">
-                    {(item.product.price * item.quantity).toLocaleString('ru-RU', {
-                        style: 'currency',
-                        currency: 'RUB',
-                    })}
-                  </span>
+                                        {(item.product.price * item.quantity).toLocaleString('ru-RU', {
+                                            style: 'currency',
+                                            currency: 'RUB',
+                                        })}
+                                    </span>
                                 </div>
                             </div>
                         </div>
@@ -183,14 +199,37 @@ export default function CartPage(): ReactElement {
 
                 <div className="mt-6 text-right space-y-4">
                     <div>
-            <span className="text-2xl font-semibold">
-              Итого:{' '}
-                {total.toLocaleString('ru-RU', {
-                    style: 'currency',
-                    currency: 'RUB',
-                })}
-            </span>
+                        <span className="text-2xl font-semibold">
+                            Итого:{' '}
+                            {totalAmount.toLocaleString('ru-RU', {
+                                style: 'currency',
+                                currency: 'RUB',
+                            })}
+                        </span>
                     </div>
+                    <div className="flex items-center justify-end gap-4">
+                        <input
+                            type="text"
+                            value={promoCode}
+                            onChange={(e) => setPromoCode(e.target.value)}
+                            placeholder="Введите промокод"
+                            className="border p-2 rounded"
+                        />
+                        <button
+                            onClick={() => {
+                                // При нажатии повторно можно вызвать previewOrder через изменение promoCode, поэтому
+                                // здесь можно опционально добавить валидацию или иную логику.
+                            }}
+                            className="bg-blue-600 text-white py-2 px-4 rounded hover:bg-blue-700 transition"
+                        >
+                            Применить
+                        </button>
+                    </div>
+                    {promoError && (
+                        <div className="text-right">
+                            <span className="text-red-500">{promoError}</span>
+                        </div>
+                    )}
 
                     <button
                         onClick={handleCreateOrder}

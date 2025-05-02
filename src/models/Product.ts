@@ -6,7 +6,7 @@ export interface IProduct {
     name: string;
     description: string;
     price: number;
-    quantity: number | null;
+    quantity: number;
     medias: IMedia[];
     categories: ICategory[] | null;
     created_at: string;

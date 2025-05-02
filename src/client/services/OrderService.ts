@@ -3,11 +3,12 @@ import {
     fetchOrders,
     fetchOrderById,
     createOrder as createOrderRepo,
-    ICreateOrderPayload
+    ICreateOrderPayload, orderPreview
 } from '@/client/repositories/OrderRepository.ts';
-import { Order, IOrder } from '@/models/Order.ts';
-import { Pagination, PaginationMeta } from '@/models/Pagination.ts';
+import {Order, IOrder} from '@/models/Order.ts';
+import {Pagination, PaginationMeta} from '@/models/Pagination.ts';
 import {castFilterParams, FilterParams} from "@/types/Params.ts";
+import {Preview} from "@/models/Preview.ts";
 
 /**
  * Получить список заказов.
@@ -34,7 +35,7 @@ export async function getOrders(
  * Получить детали одного заказа по ID.
  */
 export async function getOrderById(id: number): Promise<Order> {
-    const { data } = await fetchOrderById(id);
+    const {data} = await fetchOrderById(id);
     return Order.fromData(data);
 }
 
@@ -45,9 +46,19 @@ export async function getOrderById(id: number): Promise<Order> {
  */
 export async function createOrder(
     carts: number[],
-    couponCode?: string
+    couponCode: string|null
 ): Promise<Order> {
-    const payload: ICreateOrderPayload = { carts, coupon_code: couponCode };
-    const { data } = await createOrderRepo(payload);
+    const payload: ICreateOrderPayload = {carts, coupon_code: couponCode};
+    const {data} = await createOrderRepo(payload);
     return Order.fromData(data);
+}
+
+export async function previewOrder(
+    carts: number[],
+    couponCode: string|null
+): Promise<Preview> {
+    const payload: ICreateOrderPayload = {carts, coupon_code: couponCode};
+    const {data} = await orderPreview(payload);
+
+    return Preview.fromData(data);
 }
