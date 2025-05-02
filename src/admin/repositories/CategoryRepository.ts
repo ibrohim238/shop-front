@@ -62,10 +62,10 @@ export async function updateCategory(
  * Удалить категорию по ID.
  */
 export async function deleteCategory(
-  id: number
+  slug: string
 ): Promise<ISingleResponse<ICategory>> {
   const { data } = await http.delete<ISingleResponse<ICategory>>(
-    `/private/admin/categories/${id}`
+    `/private/admin/categories/${slug}`
   );
   return data;
 }

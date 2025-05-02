@@ -6,6 +6,7 @@ import { useCategoryDetail } from '@/admin/pages/Categories/CategoryDetailPage/u
 import CardCategory from '@/admin/pages/Categories/CategoryDetailPage/CardCategory';
 import FormCategory from '@/admin/pages/Categories/CategoryDetailPage/FormCategory';
 import { Category } from '@/models/Category';
+import { deleteCategory } from '@/admin/services/CategoryService';
 
 export default function CategoryDetailPage(): ReactElement {
   const { slug } = useParams<{ slug: string }>();
@@ -16,12 +17,26 @@ export default function CategoryDetailPage(): ReactElement {
   const [currentCategory, setCurrentCategory] = useState<Category | null>(category);
 
   // Обновляем состояние currentCategory, когда данные загружены
-  // (можно доработать с использованием useEffect, если требуется синхронизация)
   if (!currentCategory && category) {
     setCurrentCategory(category);
   }
 
   const redirect = () => navigate('/admin/categories');
+
+  const handleDelete = async () => {
+    if (!window.confirm('Вы действительно хотите удалить эту категорию?')) {
+      return;
+    }
+    try {
+      if (currentCategory) {
+        await deleteCategory(currentCategory.slug);
+      }
+      navigate('/admin/categories');
+    } catch (err) {
+      console.error(err);
+      alert('Ошибка при удалении категории');
+    }
+  };
 
   if (loading) return <LoadingComponent />;
   if (error) return <ErrorComponent message={error} onRetry={redirect} />;
@@ -50,12 +65,20 @@ export default function CategoryDetailPage(): ReactElement {
       )}
 
       {!editMode && (
-        <button
-          onClick={() => setEditMode(true)}
-          className="mt-4 px-3 py-1 bg-blue-600 text-white rounded hover:bg-blue-700"
-        >
-          Редактировать
-        </button>
+        <div className="mt-4 flex gap-4">
+          <button
+            onClick={() => setEditMode(true)}
+            className="px-3 py-1 bg-blue-600 text-white rounded hover:bg-blue-700"
+          >
+            Редактировать
+          </button>
+          <button
+            onClick={handleDelete}
+            className="px-3 py-1 bg-red-600 text-white rounded hover:bg-red-700"
+          >
+            Удалить
+          </button>
+        </div>
       )}
     </div>
   );

@@ -47,7 +47,7 @@ export async function storeCategory(categoryData: Partial<ICategory>): Promise<C
 }
 
 /**
- * Обновить категорию по ID.
+ * Обновить категорию по Slug.
  */
 export async function updateCategory(slug: string, categoryData: Partial<ICategory>): Promise<Category> {
   const { data } = await updateCategoryRequest(slug, categoryData);
@@ -55,9 +55,9 @@ export async function updateCategory(slug: string, categoryData: Partial<ICatego
 }
 
 /**
- * Удалить категорию по ID.
+ * Удалить категорию по Slug.
  */
-export async function deleteCategory(id: number): Promise<Category> {
-  const { data } = await deleteCategoryRequest(id);
+export async function deleteCategory(slug: string): Promise<Category> {
+  const { data } = await deleteCategoryRequest(slug);
   return Category.fromData(data);
 }
