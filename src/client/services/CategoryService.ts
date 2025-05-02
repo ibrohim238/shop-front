@@ -5,7 +5,7 @@ import {
 } from '@/client/repositories/CategoryRepository.ts';
 import { Category, ICategory } from '@/models/Category.ts';
 import { Pagination, PaginationMeta } from '@/models/Pagination.ts';
-import {FilterParams} from "@/types/Params.ts";
+import {castFilterParams, FilterParams} from "@/types/Params.ts";
 
 /**
  * Получить страницу категорий.
@@ -18,10 +18,7 @@ export async function getCategories(
     per_page = 15,
     filter: FilterParams = {},
 ): Promise<Pagination<Category>> {
-    const filterParams = Object.entries(filter).reduce((acc, [key, value]) => {
-        acc[`filter[${key}]`] = value;
-        return acc;
-    }, {} as FilterParams);
+    const filterParams = castFilterParams(filter);
 
     const { data, meta } = await fetchCategories(page, per_page, filterParams);
     const categories = data.map((d: ICategory) => Category.fromData(d));

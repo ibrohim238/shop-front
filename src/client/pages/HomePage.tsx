@@ -1,7 +1,7 @@
 // src/pages/HomePage.tsx
 import { useState, useEffect, ReactElement } from 'react';
 import { Link, useSearchParams } from 'react-router';
-import Paginator from '@/components/Paginator.tsx';
+import PaginatorComponent from '@/components/PaginatorComponent.tsx';
 import SidebarCategories from '@/components/SidebarCategories.tsx';
 import { getProducts } from '@/client/services/ProductService.ts';
 import type { Product } from '@/models/Product.ts';
@@ -95,7 +95,7 @@ export default function HomePage(): ReactElement {
                     </div>
 
                     {meta && (
-                        <Paginator
+                        <PaginatorComponent
                             currentPage={currentPage}
                             lastPage={meta.last_page}
                             onPageChange={setCurrentPage}

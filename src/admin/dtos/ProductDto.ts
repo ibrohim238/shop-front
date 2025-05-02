@@ -1,4 +1,14 @@
 // src/admin/dtos/ProductDto.ts
+export interface IProductDto {
+    name: string,
+    description: string,
+    price: number,
+    quantity: number,
+    medias: number[],
+    categories: number[] | null,
+}
+
+// src/admin/dtos/ProductDto.ts
 export class ProductDto {
     constructor(
         public readonly name: string,
@@ -9,7 +19,7 @@ export class ProductDto {
         public readonly categories: number[] | null,
     ) {}
 
-    public toApi() {
+    public toApi():IProductDto {
         return {
             name: this.name,
             description: this.description,

@@ -2,7 +2,7 @@
 import { fetchMedia, storeMedia as storeMediaRequest } from '@/common/repositories/MediaRepository';
 import { Media, IMedia } from '@/models/Media';
 import { Pagination, PaginationMeta } from '@/models/Pagination';
-import { FilterParams } from '@/types/Params';
+import {castFilterParams, FilterParams} from '@/types/Params';
 
 /**
  * Получить список медиа-файлов пользователя с пагинацией и фильтрацией.
@@ -16,10 +16,7 @@ export async function getMedia(
     filter: FilterParams = {}
 ): Promise<Pagination<Media>> {
     // Преобразуем фильтры в массив строк вида "filter[field]=value"
-    const filterParams = Object.entries(filter).reduce((acc, [key, value]) => {
-        acc[`filter[${key}]`] = value;
-        return acc;
-    }, {} as FilterParams);
+    const filterParams = castFilterParams(filter);
 
     // Вызываем репозиторий
     const { data: rawData, meta: rawMeta } = await fetchMedia(

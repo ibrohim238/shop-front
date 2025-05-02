@@ -1,7 +1,7 @@
 // src/pages/CartPage.tsx
 import { useState, useEffect, ReactElement } from 'react';
 import { Link, useNavigate } from 'react-router';
-import Paginator from '@/components/Paginator.tsx';
+import PaginatorComponent from '@/components/PaginatorComponent.tsx';
 import {
     getCarts,
     removeFromCart,
@@ -200,7 +200,7 @@ export default function CartPage(): ReactElement {
                         {ordering ? 'Оформляем...' : 'Оформить заказ'}
                     </button>
 
-                    <Paginator currentPage={currentPage} lastPage={meta.last_page} onPageChange={loadPage}/>
+                    <PaginatorComponent currentPage={currentPage} lastPage={meta.last_page} onPageChange={loadPage}/>
                 </div>
             </div>
         </>

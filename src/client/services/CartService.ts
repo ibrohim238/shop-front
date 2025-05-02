@@ -5,17 +5,14 @@ import {
 } from '@/client/repositories/CartRepository.ts';
 import { Cart, ICart } from '@/models/Cart.ts';
 import { Pagination, PaginationMeta } from '@/models/Pagination.ts';
-import {FilterParams} from "@/types/Params.ts";
+import {castFilterParams, FilterParams} from "@/types/Params.ts";
 
 export async function getCarts(
     page = 1,
     per_page = 15,
     filter: FilterParams = {}
 ): Promise<Pagination<Cart>> {
-    const filterParams = Object.entries(filter).reduce((acc, [key, value]) => {
-        acc[`filter[${key}]`] = value;
-        return acc;
-    }, {} as FilterParams);
+    const filterParams = castFilterParams(filter);
 
     const { data, meta } = await fetchCarts(page, per_page, filterParams);
     return Pagination.fromData({

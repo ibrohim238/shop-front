@@ -1,11 +1,15 @@
 // src/services/CategoryService.ts
 import {
     fetchCategories,
-    fetchCategoryById
+    fetchCategoryBySlug,
+    storeCategory as storeCategoryRequest,
+    updateCategory as updateCategoryRequest,
+    deleteCategory as deleteCategoryRequest,
 } from '@/admin/repositories/CategoryRepository.ts';
-import { Category, ICategory } from '@/models/Category.ts';
+import { Category } from '@/models/Category';
 import { Pagination, PaginationMeta } from '@/models/Pagination.ts';
-import {FilterParams} from "@/types/Params.ts";
+import {castFilterParams, FilterParams} from "@/types/Params.ts";
+import type { ICategory } from '@/models/Category';
 
 /**
  * Получить страницу категорий.
@@ -18,10 +22,7 @@ export async function getCategories(
     per_page = 15,
     filter: FilterParams = {},
 ): Promise<Pagination<Category>> {
-    const filterParams = Object.entries(filter).reduce((acc, [key, value]) => {
-        acc[`filter[${key}]`] = value;
-        return acc;
-    }, {} as FilterParams);
+    const filterParams = castFilterParams(filter);
 
     const { data, meta } = await fetchCategories(page, per_page, filterParams);
     const categories = data.map((d: ICategory) => Category.fromData(d));
@@ -32,7 +33,31 @@ export async function getCategories(
 /**
  * Получить детали категории по ID.
  */
-export async function getCategoryById(id: number): Promise<Category> {
-    const { data } = await fetchCategoryById(id);
+export async function getCategoryBySlug(slug: string): Promise<Category> {
+    const { data } = await fetchCategoryBySlug(slug);
     return Category.fromData(data);
+}
+
+/**
+ * Создать новую категорию.
+ */
+export async function storeCategory(categoryData: Partial<ICategory>): Promise<Category> {
+  const { data } = await storeCategoryRequest(categoryData);
+  return Category.fromData(data);
+}
+
+/**
+ * Обновить категорию по ID.
+ */
+export async function updateCategory(slug: string, categoryData: Partial<ICategory>): Promise<Category> {
+  const { data } = await updateCategoryRequest(slug, categoryData);
+  return Category.fromData(data);
+}
+
+/**
+ * Удалить категорию по ID.
+ */
+export async function deleteCategory(id: number): Promise<Category> {
+  const { data } = await deleteCategoryRequest(id);
+  return Category.fromData(data);
 }

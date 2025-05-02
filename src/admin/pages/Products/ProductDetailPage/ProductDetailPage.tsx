@@ -1,11 +1,11 @@
 // src/admin/pages/ProductDetailPage.tsx
 import { ReactElement, useState } from 'react';
 import {useParams, useNavigate} from 'react-router';
-import CardProduct from '@/admin/pages/ProductDetailPage/CardProduct.tsx';
+import CardProduct from '@/admin/pages/Products/ProductDetailPage/CardProduct.tsx';
 import LoadingComponent from '@/components/LoadingComponent.tsx';
 import ErrorComponent from '@/components/ErrorComponent.tsx';
-import { useProductDetail } from '@/admin/pages/ProductDetailPage/useProductDetail.ts';
-import FormProduct from "@/admin/pages/ProductDetailPage/Form/FormProduct.tsx";
+import { useProductDetail } from '@/admin/pages/Products/ProductDetailPage/useProductDetail.ts';
+import FormProduct from "@/admin/pages/Products/ProductDetailPage/FormProduct.tsx";
 import {Product} from "@/models/Product.ts";
 
 export default function AdminProductDetailPage(): ReactElement {

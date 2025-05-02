@@ -6,7 +6,7 @@ interface PaginatorProps {
     onPageChange: (page: number) => void;
 }
 
-export default function Paginator({
+export default function PaginatorComponent({
                                       currentPage,
                                       lastPage,
                                       onPageChange,

@@ -1,7 +1,7 @@
 import { fetchProducts, fetchProductById } from '@/client/repositories/ProductRepository.ts';
 import { Product, IProduct } from '@/models/Product.ts';
 import {Pagination, PaginationMeta, IPagination, ISingleResponse} from '@/models/Pagination.ts';
-import {FilterParams} from "@/types/Params.ts";
+import {castFilterParams, FilterParams} from "@/types/Params.ts";
 
 
 export async function getProducts(
@@ -9,10 +9,7 @@ export async function getProducts(
     limit = 15,
     filter: FilterParams = {},
 ): Promise<Pagination<Product>> {
-    const filterParams = Object.entries(filter).reduce((acc, [key, value]) => {
-        acc[`filter[${key}]`] = value;
-        return acc;
-    }, {} as FilterParams);
+    const filterParams = castFilterParams(filter);
 
     const { data, meta }: IPagination<IProduct> = await fetchProducts(
         page,

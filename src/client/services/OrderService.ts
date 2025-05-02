@@ -7,7 +7,7 @@ import {
 } from '@/client/repositories/OrderRepository.ts';
 import { Order, IOrder } from '@/models/Order.ts';
 import { Pagination, PaginationMeta } from '@/models/Pagination.ts';
-import {FilterParams} from "@/types/Params.ts";
+import {castFilterParams, FilterParams} from "@/types/Params.ts";
 
 /**
  * Получить список заказов.
@@ -20,10 +20,7 @@ export async function getOrders(
     per_page = 15,
     filter: FilterParams = {}
 ): Promise<Pagination<Order>> {
-    const filterParams = Object.entries(filter).reduce((acc, [key, value]) => {
-        acc[`filter[${key}]`] = value;
-        return acc;
-    }, {} as FilterParams);
+    const filterParams = castFilterParams(filter);
 
     const {data, meta} = await fetchOrders(page, per_page, filterParams);
 

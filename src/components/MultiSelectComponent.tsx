@@ -36,7 +36,7 @@ interface Props<T> {
   ) => Promise<AsyncResult<T>>;
 }
 
-export default function MultiSelect<T>({
+export default function MultiSelectComponent<T>({
   selected,
   onChange,
   placeholder = 'Выберите...',

@@ -1,7 +1,7 @@
 // src/pages/OrdersPage.tsx
 import {useState, useEffect, ReactElement} from 'react';
 import {Link} from 'react-router';
-import Paginator from '@/components/Paginator.tsx';
+import PaginatorComponent from '@/components/PaginatorComponent.tsx';
 import {getOrders} from '@/client/services/OrderService.ts';
 import type {Order} from '@/models/Order.ts';
 import type {PaginationMeta} from '@/models/Pagination.ts';
@@ -90,7 +90,7 @@ export default function OrdersPage(): ReactElement {
             </div>
 
             <div className="mt-6">
-                <Paginator
+                <PaginatorComponent
                     currentPage={currentPage}
                     lastPage={meta.last_page}
                     onPageChange={loadPage}

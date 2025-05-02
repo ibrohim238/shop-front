@@ -1,10 +1,10 @@
 // src/admin/pages/ProductsPage.tsx
 import { useState, useEffect, ReactElement } from 'react';
 import { Link } from 'react-router';
-import { getProducts } from '@/admin/services/ProductService';
-import type { Product } from '@/models/Product';
-import Paginator from '@/components/Paginator';
-import type { PaginationMeta } from '@/models/Pagination';
+import { getProducts } from '@/admin/services/ProductService.ts';
+import type { Product } from '@/models/Product.ts';
+import PaginatorComponent from '@/components/PaginatorComponent.tsx';
+import type { PaginationMeta } from '@/models/Pagination.ts';
 
 export default function  ProductsPage(): ReactElement {
     const [products, setProducts] = useState<Product[]>([]);
@@ -48,7 +48,7 @@ export default function  ProductsPage(): ReactElement {
             <div className="flex items-center justify-between mb-4">
                 <h1 className="text-2xl font-semibold">Управление товарами</h1>
                 <Link
-                    to="products/new"
+                    to="/admin/products/new"
                     className="bg-blue-600 text-white px-4 py-2 rounded hover:bg-blue-700 transition"
                 >
                     Добавить товар
@@ -97,7 +97,7 @@ export default function  ProductsPage(): ReactElement {
 
             {meta && (
                 <div className="mt-6">
-                    <Paginator
+                    <PaginatorComponent
                         currentPage={page}
                         lastPage={meta.last_page}
                         onPageChange={setPage}

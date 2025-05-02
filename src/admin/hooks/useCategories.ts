@@ -1,5 +1,5 @@
 import { getCategories } from "@/admin/services/CategoryService.ts";
-import type { Option } from "@/components/MultiSelect.tsx";
+import type { Option } from "@/components/MultiSelectComponent.tsx";
 
 export function useCategories() {
   const limit = 15;

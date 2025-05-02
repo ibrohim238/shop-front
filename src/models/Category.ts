@@ -7,6 +7,7 @@ export interface ICategory {
     slug: string;
     media: IMedia | null;
     description: string;
+    parent_id: number | null;
     created_at: string;
     updated_at: string;
 }
@@ -18,6 +19,7 @@ export class Category {
         public readonly slug: string,
         public readonly media: Media | null,
         public readonly description: string,
+        public readonly parent_id: number | null,
         public readonly created_at: Date,
         public readonly updated_at: Date
     ) {}
@@ -29,6 +31,7 @@ export class Category {
             data.slug,
             data.media ? Media.fromData(data.media) : null,
             data.description,
+            data.parent_id,
             new Date(data.created_at),
             new Date(data.updated_at)
         );

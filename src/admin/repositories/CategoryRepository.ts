@@ -1,35 +1,71 @@
-// src/repositories/CategoryRepository.ts
-import http from '@/utils/http.ts';
-import { ICategory } from '@/models/Category.ts';
-import { IPagination, ISingleResponse } from '@/models/Pagination.ts';
-import {FilterParams} from "@/types/Params.ts";
+import http from '@/utils/http';
+import { ICategory } from '@/models/Category';
+import { IPagination, ISingleResponse } from '@/models/Pagination';
+import { FilterParams } from '@/types/Params';
 
 /**
  * Получить список категорий с пагинацией.
  */
 export async function fetchCategories(
-    page: number,
-    per_page: number,
-    filter: FilterParams = {}
+  page: number,
+  per_page: number,
+  filter: FilterParams = {}
 ): Promise<IPagination<ICategory>> {
-    const params: FilterParams = { page, per_page, ...filter };
-    const response = await http.get<IPagination<ICategory>>(
-        '/private/admin/categories',
-        {
-            params: params,
-        }
-    );
-    return response.data;
+  const params: FilterParams = { page, per_page, ...filter };
+  const response = await http.get<IPagination<ICategory>>(
+    '/private/admin/categories',
+    { params }
+  );
+  return response.data;
 }
 
 /**
- * Получить детали одной категории по ID.
+ * Получить детали одной категории по Slug.
  */
-export async function fetchCategoryById(
-    id: number
+export async function fetchCategoryBySlug(
+  slug: string
 ): Promise<ISingleResponse<ICategory>> {
-    const response = await http.get<ISingleResponse<ICategory>>(
-        `/private/admin/categories/${id}`
-    );
-    return response.data;
+  const response = await http.get<ISingleResponse<ICategory>>(
+    `/private/admin/categories/${slug}`
+  );
+  return response.data;
+}
+
+/**
+ * Создать новую категорию.
+ */
+export async function storeCategory(
+  category: Partial<ICategory>
+): Promise<ISingleResponse<ICategory>> {
+  const { data } = await http.post<ISingleResponse<ICategory>>(
+    '/private/admin/categories',
+    category
+  );
+  return data;
+}
+
+/**
+ * Обновить категорию по ID.
+ */
+export async function updateCategory(
+  slug: string,
+  category: Partial<ICategory>
+): Promise<ISingleResponse<ICategory>> {
+  const { data } = await http.put<ISingleResponse<ICategory>>(
+    `/private/admin/categories/${slug}`,
+    category
+  );
+  return data;
+}
+
+/**
+ * Удалить категорию по ID.
+ */
+export async function deleteCategory(
+  id: number
+): Promise<ISingleResponse<ICategory>> {
+  const { data } = await http.delete<ISingleResponse<ICategory>>(
+    `/private/admin/categories/${id}`
+  );
+  return data;
 }

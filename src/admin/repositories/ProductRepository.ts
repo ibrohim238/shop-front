@@ -3,7 +3,7 @@ import http from '@/utils/http';
 import { IProduct } from '@/models/Product';
 import { ISingleResponse, IPagination } from '@/models/Pagination';
 import {FilterParams} from '@/types/Params';
-import { ProductDto } from '@/admin/dtos/ProductDto';
+import { IProductDto } from '@/admin/dtos/ProductDto';
 
 export async function fetchProducts(
     page: number,
@@ -30,21 +30,27 @@ export async function fetchProductById(
 /** Новое: полный апдейт через PUT */
 export async function updateProduct(
     id: number,
-    dto: ProductDto
+    dto: IProductDto
 ): Promise<ISingleResponse<IProduct>> {
     const { data } = await http.put<ISingleResponse<IProduct>>(
         `/private/admin/products/${id}`,
-        dto.toApi()
+        dto
     );
     return data;
 }
 
 export async function storeProduct(
-    dto: ProductDto
+    dto: IProductDto
 ): Promise<ISingleResponse<IProduct>> {
     const { data } = await http.post<ISingleResponse<IProduct>>(
         '/private/admin/products',
-        dto.toApi()
+        dto
     );
     return data;
+}
+
+export async function deleteProduct(
+    id: number
+): Promise<void> {
+    await http.delete(`/private/admin/products/${id}`);
 }

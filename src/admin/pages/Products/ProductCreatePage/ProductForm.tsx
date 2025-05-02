@@ -1,64 +1,52 @@
-// src/admin/components/ProductForm.tsx
-import type {ChangeEvent, FormEvent, ReactElement} from 'react';
-import { useState } from 'react';
-import { Product } from '@/models/Product.ts';
-import {Media} from "@/models/Media.ts";
-import {Category} from "@/models/Category.ts";
-import {storeMedia} from "@/common/services/MediaService.ts";
-import {ProductDto} from "@/admin/dtos/ProductDto.ts";
-import {updateProduct} from "@/admin/services/ProductService.ts";
-import FileUpload from "@/components/FileUpload.tsx";
-import MultiSelect from "@/components/MultiSelect.tsx";
-import {useCategories} from "@/admin/pages/ProductDetailPage/Form/useCategories.ts";
-
-interface Props {
-    product: Product;
-    success: (product: Product) => void;
-}
+import { useState, ChangeEvent, FormEvent, ReactElement } from 'react';
+import { storeMedia } from '@/common/services/MediaService.ts';
+import { ProductDto } from '@/admin/dtos/ProductDto.ts';
+import { storeProduct } from '@/admin/services/ProductService.ts';
+import FileUploadComponent from '@/components/FileUploadComponent.tsx';
+import MultiSelectComponent from '@/components/MultiSelectComponent.tsx';
+import type { Product } from '@/models/Product.ts';
+import { useCategories } from '@/admin/hooks/useCategories.ts';
 
 interface IProductForm {
-    name: string,
-    description: string,
-    price: number,
-    quantity: number,
-    medias: IMediaForm[],
-    newMedias: File[]
-    categories: number[],
+    name: string;
+    description: string;
+    price: number;
+    quantity: number;
+    medias: IMediaForm[];
+    newMedias: File[];
+    categories: number[];
 }
 
 interface IMediaForm {
-    id: number,
-    url: string,
+    id: number;
+    url: string;
 }
 
+interface Props {
+    success: (product: Product) => void;
+}
 
-export default function FormProduct({
-                                        product,
-                                        success
-                                    }: Props): ReactElement {
-    const {loadCategories} = useCategories();
+export default function ProductForm({ success }: Props): ReactElement {
+    const { loadCategories } = useCategories();
     const [productForm, setProductForm] = useState<IProductForm>({
-        name: product.name,
-        description: product.description,
-        price: product.price,
-        quantity: product.quantity,
-        medias: product.medias.map((media: Media): IMediaForm => ({
-            id: media.id,
-            url: media.url,
-        })),
+        name: '',
+        description: '',
+        price: 0,
+        quantity: 0,
+        medias: [],
         newMedias: [],
-        categories: product.categories?.map((category: Category): number => category.id) || [],
+        categories: [],
     });
     const [saving, setSaving] = useState(false);
 
-    const handleChange = (e: ChangeEvent<HTMLInputElement|HTMLTextAreaElement>) => {
+    const handleChange = (e: ChangeEvent<HTMLInputElement | HTMLTextAreaElement>) => {
         if (e.target.type === 'file') {
             const target = e.target as HTMLInputElement;
-
             setProductForm(prev => ({
                 ...prev,
                 newMedias: Array.from(target.files || []),
             }));
+            return;
         }
 
         setProductForm(prev => ({
@@ -74,28 +62,26 @@ export default function FormProduct({
         try {
             const mediaIds: number[] = [];
             if (productForm.newMedias.length > 0) {
-                const medias: Media[] = await storeMedia(productForm.newMedias);
-                mediaIds.push(...medias.map((media): number => media.id));
+                const medias = await storeMedia(productForm.newMedias);
+                mediaIds.push(...medias.map(media => media.id));
             }
-            mediaIds.push(...productForm.medias.map((media: IMediaForm): number => media.id));
+            // Если вдруг есть уже выбранные изображения (что маловероятно при создании),
+            // добавляем их id
+            mediaIds.push(...productForm.medias.map(media => media.id));
 
-            const newProduct = await updateProduct(
-                product.id,
+            const newProduct = await storeProduct(
                 new ProductDto(
                     productForm.name,
                     productForm.description,
                     productForm.price,
                     productForm.quantity,
                     mediaIds,
-                    productForm.categories.length === 0
-                        ? null
-                        : productForm.categories,
-                ),
+                    productForm.categories.length === 0 ? null : productForm.categories
+                )
             );
-
             success(newProduct);
-        } catch {
-            // Обработать ошибку или оставить пустым, но не ставить точку с запятой
+        } catch (error) {
+            console.error(error);
         } finally {
             setSaving(false);
         }
@@ -103,8 +89,6 @@ export default function FormProduct({
 
     return (
         <form onSubmit={handleSubmit} className="bg-white shadow rounded-lg p-6 space-y-6">
-            {/*{error && <p className="text-red-500">{error}</p>}*/}
-
             <div>
                 <label className="block text-sm font-medium text-gray-700">Название</label>
                 <input
@@ -153,10 +137,10 @@ export default function FormProduct({
                 </div>
                 <div>
                     <label className="block text-sm font-medium text-gray-700">Категории</label>
-                    <MultiSelect<number>
+                    <MultiSelectComponent<number>
                         selected={productForm.categories}
                         onChange={(newSelectedIds) => {
-                            setProductForm((prev) => ({
+                            setProductForm(prev => ({
                                 ...prev,
                                 categories: newSelectedIds,
                             }));
@@ -165,7 +149,7 @@ export default function FormProduct({
                         loadOptions={loadCategories}
                     />
                 </div>
-                <FileUpload
+                <FileUploadComponent
                     label="Изображения"
                     accept="image/*"
                     onSelect={handleChange}
