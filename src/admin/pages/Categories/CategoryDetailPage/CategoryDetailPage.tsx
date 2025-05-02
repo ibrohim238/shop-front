@@ -12,36 +12,28 @@ export default function CategoryDetailPage(): ReactElement {
   const { slug } = useParams<{ slug: string }>();
   const categorySlug = String(slug);
   const navigate = useNavigate();
-  const { category, loading, error } = useCategoryDetail(categorySlug);
+  const { category, setCategory, loading, error } = useCategoryDetail(categorySlug);
   const [editMode, setEditMode] = useState(false);
-  const [currentCategory, setCurrentCategory] = useState<Category | null>(category);
-
-  // Обновляем состояние currentCategory, когда данные загружены
-  if (!currentCategory && category) {
-    setCurrentCategory(category);
-  }
 
   const redirect = () => navigate('/admin/categories');
+
+  if (loading) return <LoadingComponent />;
+  if (error) return <ErrorComponent message={error} onRetry={redirect} />;
+  if (!category)
+    return <ErrorComponent message="Категория не существует" onRetry={redirect} />;
 
   const handleDelete = async () => {
     if (!window.confirm('Вы действительно хотите удалить эту категорию?')) {
       return;
     }
     try {
-      if (currentCategory) {
-        await deleteCategory(currentCategory.slug);
-      }
-      navigate('/admin/categories');
+      await deleteCategory(category.slug);
+      redirect();
     } catch (err) {
       console.error(err);
       alert('Ошибка при удалении категории');
     }
   };
-
-  if (loading) return <LoadingComponent />;
-  if (error) return <ErrorComponent message={error} onRetry={redirect} />;
-  if (!currentCategory)
-    return <ErrorComponent message="Категория не существует" onRetry={redirect} />;
 
   return (
     <div className="container mx-auto p-6">
@@ -54,14 +46,14 @@ export default function CategoryDetailPage(): ReactElement {
 
       {editMode ? (
         <FormCategory
-          category={currentCategory}
+          category={category}
           success={(updatedCategory: Category) => {
-            setCurrentCategory(updatedCategory);
+            setCategory(updatedCategory);
             setEditMode(false);
           }}
         />
       ) : (
-        <CardCategory category={currentCategory} />
+        <CardCategory category={category} />
       )}
 
       {!editMode && (

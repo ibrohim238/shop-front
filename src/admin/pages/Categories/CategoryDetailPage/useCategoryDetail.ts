@@ -22,5 +22,5 @@ export function useCategoryDetail(categorySlug: string) {
       });
   }, [categorySlug]);
 
-  return { category, loading, error };
+  return { category, setCategory, loading, error };
 }

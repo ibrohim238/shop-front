@@ -57,7 +57,6 @@ export async function updateCategory(slug: string, categoryData: Partial<ICatego
 /**
  * Удалить категорию по Slug.
  */
-export async function deleteCategory(slug: string): Promise<Category> {
-  const { data } = await deleteCategoryRequest(slug);
-  return Category.fromData(data);
+export async function deleteCategory(slug: string): Promise<void> {
+  await deleteCategoryRequest(slug);
 }
