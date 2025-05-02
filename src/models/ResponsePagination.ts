@@ -25,6 +25,10 @@ export interface IPagination<T> {
     meta: IPaginationMeta;
 }
 
+export interface IResponse<T> {
+    data: T[];
+}
+
 export interface ISingleResponse<T> {
     data: T;
 }
@@ -52,16 +56,28 @@ export class PaginationMeta {
 }
 
 
-export class Pagination<T> {
+export class ResponsePagination<T> {
     constructor(
         public readonly data: T[],
         public readonly meta: PaginationMeta
     ) {}
 
-    public static fromData<U>(data: Pagination<U>): Pagination<U> {
-        return new Pagination(
+    public static fromData<U>(data: ResponsePagination<U>): ResponsePagination<U> {
+        return new ResponsePagination(
             data.data,
             PaginationMeta.fromData(data.meta),
+        );
+    }
+}
+
+export class Response<T> {
+    constructor(
+        public readonly data: T[],
+    ) {}
+
+    public static fromData<U>(data: IResponse<U>): Response<U> {
+        return new Response(
+            data.data,
         );
     }
 }

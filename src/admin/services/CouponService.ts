@@ -5,7 +5,7 @@ import {
   deleteCoupon as deleteCouponRequest 
 } from '@/admin/repositories/CouponRepository';
 import { Coupon } from '@/models/Coupon';
-import { Pagination, PaginationMeta } from '@/models/Pagination';
+import { ResponsePagination, PaginationMeta } from '@/models/ResponsePagination.ts';
 import { castFilterParams, FilterParams } from '@/types/Params';
 import { CouponDto } from '@/admin/dtos/CouponDto';
 
@@ -16,7 +16,7 @@ export async function getCoupons(
   page = 1,
   per_page = 15,
   filter: FilterParams = {}
-): Promise<Pagination<Coupon>> {
+): Promise<ResponsePagination<Coupon>> {
   const filterParams = castFilterParams(filter);
 
   const { data: rawData, meta: rawMeta } = await fetchCoupons(
@@ -24,7 +24,7 @@ export async function getCoupons(
     per_page,
     filterParams
   );
-  return Pagination.fromData({
+  return ResponsePagination.fromData({
     data: rawData.map((d) => Coupon.fromData(d)),
     meta: PaginationMeta.fromData(rawMeta),
   });

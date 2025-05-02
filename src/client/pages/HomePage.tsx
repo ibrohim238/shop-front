@@ -5,7 +5,7 @@ import PaginatorComponent from '@/components/PaginatorComponent.tsx';
 import SidebarCategories from '@/components/SidebarCategories.tsx';
 import { getProducts } from '@/client/services/ProductService.ts';
 import type { Product } from '@/models/Product.ts';
-import type { PaginationMeta } from '@/models/Pagination.ts';
+import type { PaginationMeta } from '@/models/ResponsePagination.ts';
 import type { FilterParams } from '@/types/Params.ts';
 
 export default function HomePage(): ReactElement {

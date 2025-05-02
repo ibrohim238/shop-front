@@ -7,7 +7,7 @@ import {
     deleteCategory as deleteCategoryRequest,
 } from '@/admin/repositories/CategoryRepository.ts';
 import { Category } from '@/models/Category';
-import { Pagination, PaginationMeta } from '@/models/Pagination.ts';
+import { ResponsePagination, PaginationMeta } from '@/models/ResponsePagination.ts';
 import {castFilterParams, FilterParams} from "@/types/Params.ts";
 import type { ICategory } from '@/models/Category';
 
@@ -21,13 +21,13 @@ export async function getCategories(
     page = 1,
     per_page = 15,
     filter: FilterParams = {},
-): Promise<Pagination<Category>> {
+): Promise<ResponsePagination<Category>> {
     const filterParams = castFilterParams(filter);
 
     const { data, meta } = await fetchCategories(page, per_page, filterParams);
     const categories = data.map((d: ICategory) => Category.fromData(d));
     const paginationMeta = PaginationMeta.fromData(meta);
-    return Pagination.fromData({ data: categories, meta: paginationMeta });
+    return ResponsePagination.fromData({ data: categories, meta: paginationMeta });
 }
 
 /**

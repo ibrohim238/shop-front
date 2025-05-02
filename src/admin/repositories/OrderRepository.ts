@@ -1,6 +1,6 @@
 import http from '@/utils/http';
 import { IOrder } from '@/models/Order';
-import { ISingleResponse, IPagination } from '@/models/Pagination';
+import { ISingleResponse, IPagination } from '@/models/ResponsePagination.ts';
 import { FilterParams } from '@/types/Params';
 
 export async function fetchOrders(

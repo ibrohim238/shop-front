@@ -4,7 +4,7 @@ import {
     fetchCategoryById
 } from '@/client/repositories/CategoryRepository.ts';
 import { Category, ICategory } from '@/models/Category.ts';
-import { Pagination, PaginationMeta } from '@/models/Pagination.ts';
+import { ResponsePagination, PaginationMeta } from '@/models/ResponsePagination.ts';
 import {castFilterParams, FilterParams} from "@/types/Params.ts";
 
 /**
@@ -17,13 +17,13 @@ export async function getCategories(
     page = 1,
     per_page = 15,
     filter: FilterParams = {},
-): Promise<Pagination<Category>> {
+): Promise<ResponsePagination<Category>> {
     const filterParams = castFilterParams(filter);
 
     const { data, meta } = await fetchCategories(page, per_page, filterParams);
     const categories = data.map((d: ICategory) => Category.fromData(d));
     const paginationMeta = PaginationMeta.fromData(meta);
-    return Pagination.fromData({ data: categories, meta: paginationMeta });
+    return ResponsePagination.fromData({ data: categories, meta: paginationMeta });
 }
 
 /**

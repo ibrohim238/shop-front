@@ -6,7 +6,7 @@ import {
     ICreateOrderPayload, orderPreview
 } from '@/client/repositories/OrderRepository.ts';
 import {Order, IOrder} from '@/models/Order.ts';
-import {Pagination, PaginationMeta} from '@/models/Pagination.ts';
+import {ResponsePagination, PaginationMeta} from '@/models/ResponsePagination.ts';
 import {castFilterParams, FilterParams} from "@/types/Params.ts";
 import {Preview} from "@/models/Preview.ts";
 
@@ -20,12 +20,12 @@ export async function getOrders(
     page = 1,
     per_page = 15,
     filter: FilterParams = {}
-): Promise<Pagination<Order>> {
+): Promise<ResponsePagination<Order>> {
     const filterParams = castFilterParams(filter);
 
     const {data, meta} = await fetchOrders(page, per_page, filterParams);
 
-    return Pagination.fromData({
+    return ResponsePagination.fromData({
         data: data.map((d: IOrder) => Order.fromData(d)),
         meta: PaginationMeta.fromData(meta),
     });

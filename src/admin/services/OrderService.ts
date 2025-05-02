@@ -3,7 +3,7 @@ import {
   fetchOrderById as fetchOrderByIdRequest
 } from '@/admin/repositories/OrderRepository';
 import { Order, IOrder } from '@/models/Order';
-import { Pagination, PaginationMeta } from '@/models/Pagination';
+import { ResponsePagination, PaginationMeta } from '@/models/ResponsePagination.ts';
 import { castFilterParams, FilterParams } from '@/types/Params';
 
 /**
@@ -13,7 +13,7 @@ export async function getOrders(
   page = 1,
   per_page = 15,
   filter: FilterParams = {}
-): Promise<Pagination<Order>> {
+): Promise<ResponsePagination<Order>> {
   const filterParams = castFilterParams(filter);
 
   const { data: rawData, meta: rawMeta } = await fetchOrdersRequest(
@@ -22,7 +22,7 @@ export async function getOrders(
     filterParams
   );
 
-  return Pagination.fromData({
+  return ResponsePagination.fromData({
     data: rawData.map((d: IOrder) => Order.fromData(d)),
     meta: PaginationMeta.fromData(rawMeta),
   });

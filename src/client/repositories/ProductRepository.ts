@@ -1,7 +1,7 @@
 // src/repositories/ProductRepository.ts
 import http from '@/utils/http.ts';
 import { IProduct } from '@/models/Product.ts';
-import { IPagination, ISingleResponse } from '@/models/Pagination.ts';
+import { IPagination, ISingleResponse } from '@/models/ResponsePagination.ts';
 import {FilterParams} from "@/types/Params.ts";
 
 export async function fetchProducts(

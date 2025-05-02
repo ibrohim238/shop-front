@@ -6,7 +6,7 @@ import {
   deleteProduct as deleteProductRequest
 } from '@/admin/repositories/ProductRepository';
 import { Product, IProduct } from '@/models/Product';
-import { Pagination, PaginationMeta } from '@/models/Pagination';
+import { ResponsePagination, PaginationMeta } from '@/models/ResponsePagination.ts';
 import { castFilterParams, FilterParams } from '@/types/Params';
 import { ProductDto } from '@/admin/dtos/ProductDto';
 
@@ -17,7 +17,7 @@ export async function getProducts(
   page = 1,
   per_page = 15,
   filter: FilterParams = {}
-): Promise<Pagination<Product>> {
+): Promise<ResponsePagination<Product>> {
   const filterParams = castFilterParams(filter);
 
   const { data: rawData, meta: rawMeta } = await fetchProducts(
@@ -25,7 +25,7 @@ export async function getProducts(
     per_page,
     filterParams
   );
-  return Pagination.fromData({
+  return ResponsePagination.fromData({
     data: rawData.map((d: IProduct) => Product.fromData(d)),
     meta: PaginationMeta.fromData(rawMeta),
   });

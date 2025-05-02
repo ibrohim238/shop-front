@@ -4,18 +4,18 @@ import {
     fetchRemoveFromCart, fetchUpdateCartItem
 } from '@/client/repositories/CartRepository.ts';
 import { Cart, ICart } from '@/models/Cart.ts';
-import { Pagination, PaginationMeta } from '@/models/Pagination.ts';
+import { ResponsePagination, PaginationMeta } from '@/models/ResponsePagination.ts';
 import {castFilterParams, FilterParams} from "@/types/Params.ts";
 
 export async function getCarts(
     page = 1,
     per_page = 15,
     filter: FilterParams = {}
-): Promise<Pagination<Cart>> {
+): Promise<ResponsePagination<Cart>> {
     const filterParams = castFilterParams(filter);
 
     const { data, meta } = await fetchCarts(page, per_page, filterParams);
-    return Pagination.fromData({
+    return ResponsePagination.fromData({
         data: data.map((item: ICart) => Cart.fromData(item)),
         meta: PaginationMeta.fromData(meta)
     });

@@ -2,11 +2,12 @@ import { ReactElement, useState } from 'react';
 import { useParams, useNavigate } from 'react-router';
 import LoadingComponent from '@/components/LoadingComponent';
 import ErrorComponent from '@/components/ErrorComponent';
-import { useCategoryDetail } from '@/admin/pages/Categories/CategoryDetailPage/useCategoryDetail';
-import CardCategory from '@/admin/pages/Categories/CategoryDetailPage/CardCategory';
-import FormCategory from '@/admin/pages/Categories/CategoryDetailPage/FormCategory';
+import { useCategoryDetail } from './useCategoryDetail';
+import CardCategory from './CardCategory';
+import FormCategory from './FormCategory';
 import { Category } from '@/models/Category';
 import { deleteCategory } from '@/admin/services/CategoryService';
+import CategoryOrderChart from './CategoryOrderChart';
 
 export default function CategoryDetailPage(): ReactElement {
   const { slug } = useParams<{ slug: string }>();
@@ -16,44 +17,39 @@ export default function CategoryDetailPage(): ReactElement {
   const [editMode, setEditMode] = useState(false);
 
   const redirect = () => navigate('/admin/categories');
-
   if (loading) return <LoadingComponent />;
   if (error) return <ErrorComponent message={error} onRetry={redirect} />;
-  if (!category)
-    return <ErrorComponent message="Категория не существует" onRetry={redirect} />;
+  if (!category) return <ErrorComponent message="Категория не существует" onRetry={redirect} />;
 
   const handleDelete = async () => {
-    if (!window.confirm('Вы действительно хотите удалить эту категорию?')) {
-      return;
-    }
+    if (!window.confirm('Вы действительно хотите удалить эту категорию?')) return;
     try {
       await deleteCategory(category.slug);
       redirect();
-    } catch (err) {
-      console.error(err);
+    } catch {
       alert('Ошибка при удалении категории');
     }
   };
 
   return (
     <div className="container mx-auto p-6">
-      <button
-        onClick={() => navigate('/admin/categories')}
-        className="mb-4 text-blue-600 hover:underline"
-      >
+      <button onClick={redirect} className="mb-4 text-blue-600 hover:underline">
         ← Назад к списку категорий
       </button>
 
       {editMode ? (
         <FormCategory
           category={category}
-          success={(updatedCategory: Category) => {
-            setCategory(updatedCategory);
+          success={(updated: Category) => {
+            setCategory(updated);
             setEditMode(false);
           }}
         />
       ) : (
-        <CardCategory category={category} />
+        <>
+          <CardCategory category={category} />
+          <CategoryOrderChart categoryId={category.id} />
+        </>
       )}
 
       {!editMode && (

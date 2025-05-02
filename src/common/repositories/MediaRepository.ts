@@ -1,7 +1,7 @@
 // src/common/repositories/MediaRepository.ts
 import http from '@/utils/http';
 import { IMedia } from '@/models/Media';
-import { IPagination, ISingleResponse } from '@/models/Pagination';
+import { IPagination, ISingleResponse } from '@/models/ResponsePagination.ts';
 import { FilterParams } from '@/types/Params';
 
 export interface IStoreMediaResponse {

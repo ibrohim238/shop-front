@@ -1,6 +1,6 @@
 import http from '@/utils/http';
 import { ICategory } from '@/models/Category';
-import { IPagination, ISingleResponse } from '@/models/Pagination';
+import { IPagination, ISingleResponse } from '@/models/ResponsePagination.ts';
 import { FilterParams } from '@/types/Params';
 
 /**

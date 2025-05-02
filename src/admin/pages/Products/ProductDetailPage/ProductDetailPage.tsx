@@ -7,6 +7,7 @@ import { useProductDetail } from '@/admin/pages/Products/ProductDetailPage/usePr
 import FormProduct from "@/admin/pages/Products/ProductDetailPage/FormProduct";
 import { Product } from "@/models/Product";
 import { deleteProduct } from '@/admin/services/ProductService';
+import ProductOrderChart from "@/admin/pages/Products/ProductDetailPage/ProductOrderChart.tsx";
 
 export default function AdminProductDetailPage(): ReactElement {
     const { id } = useParams<{ id: string }>();
@@ -44,7 +45,12 @@ export default function AdminProductDetailPage(): ReactElement {
                     setProduct(updatedProduct);
                     setEditMode(false);
                 }} />
-                : <CardProduct product={product} />
+                : (
+                    <>
+                        <CardProduct product={product} />
+                        <ProductOrderChart productId={productId} />
+                    </>
+                )
             }
             <div className="flex gap-4 mt-4">
                 <button

@@ -8,7 +8,7 @@ import {
 } from '@/client/services/CartService.ts';
 import { createOrder, previewOrder } from '@/client/services/OrderService.ts';
 import type { Cart } from '@/models/Cart.ts';
-import type { PaginationMeta } from '@/models/Pagination.ts';
+import type { PaginationMeta } from '@/models/ResponsePagination.ts';
 
 export default function CartPage(): ReactElement {
     const navigate = useNavigate();

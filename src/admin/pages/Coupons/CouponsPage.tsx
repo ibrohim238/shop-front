@@ -3,7 +3,7 @@ import { Link } from 'react-router';
 import { getCoupons } from '@/admin/services/CouponService.ts';
 import type { Coupon } from '@/models/Coupon.ts';
 import PaginatorComponent from '@/components/PaginatorComponent.tsx';
-import type { PaginationMeta } from '@/models/Pagination.ts';
+import type { PaginationMeta } from '@/models/ResponsePagination.ts';
 
 export default function CouponsPage(): ReactElement {
     const [coupons, setCoupons] = useState<Coupon[]>([]);

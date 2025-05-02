@@ -4,7 +4,7 @@ import {Link} from 'react-router';
 import PaginatorComponent from '@/components/PaginatorComponent.tsx';
 import {getOrders} from '@/client/services/OrderService.ts';
 import type {Order} from '@/models/Order.ts';
-import type {PaginationMeta} from '@/models/Pagination.ts';
+import type {PaginationMeta} from '@/models/ResponsePagination.ts';
 
 export default function OrdersPage(): ReactElement {
     const [orders, setOrders] = useState<Order[]>([]);

@@ -1,7 +1,7 @@
 // src/common/services/MediaService.ts
 import { fetchMedia, storeMedia as storeMediaRequest } from '@/common/repositories/MediaRepository';
 import { Media, IMedia } from '@/models/Media';
-import { Pagination, PaginationMeta } from '@/models/Pagination';
+import { ResponsePagination, PaginationMeta } from '@/models/ResponsePagination.ts';
 import {castFilterParams, FilterParams} from '@/types/Params';
 
 /**
@@ -14,7 +14,7 @@ export async function getMedia(
     page = 1,
     per_page = 15,
     filter: FilterParams = {}
-): Promise<Pagination<Media>> {
+): Promise<ResponsePagination<Media>> {
     // Преобразуем фильтры в массив строк вида "filter[field]=value"
     const filterParams = castFilterParams(filter);
 
@@ -29,7 +29,7 @@ export async function getMedia(
     const medias = rawData.map((d: IMedia) => Media.fromData(d));
     const meta = PaginationMeta.fromData(rawMeta);
 
-    return Pagination.fromData({ data: medias, meta });
+    return ResponsePagination.fromData({ data: medias, meta });
 }
 
 /**
