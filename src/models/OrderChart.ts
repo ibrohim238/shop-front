@@ -1,5 +1,5 @@
 export interface IOrderChart {
-    date: Date;
+    date: string;
     quantity: number;
     product_id: number;
 }
@@ -11,7 +11,7 @@ export class OrderChart {
         public readonly product_id: number,
     ) {}
 
-    public static fromData(data: IOrderChart): IOrderChart {
+    public static fromData(data: IOrderChart): OrderChart {
         return new OrderChart(
             new Date(data.date),
             data.quantity,
