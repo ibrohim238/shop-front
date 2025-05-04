@@ -1,16 +1,3 @@
-export interface IPaginationLinks {
-    first: string;
-    last: string;
-    prev: string | null;
-    next: string | null;
-}
-
-export interface IPaginationLink {
-    url: string | null;
-    label: string;
-    active: boolean;
-}
-
 export interface IPaginationMeta {
     current_page: number;
     from: number;

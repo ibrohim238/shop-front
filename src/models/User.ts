@@ -12,10 +12,6 @@ export interface IUser {
     updated_at: string;
 }
 
-export interface IUserResponse {
-    data: IUser;
-}
-
 export class User {
     constructor(
         public readonly id: number,
