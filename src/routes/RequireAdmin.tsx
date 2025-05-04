@@ -21,7 +21,6 @@ export default function RequireAdmin({ children }: RequireAdminProps): ReactElem
         (async () => {
             try {
                 const user: User = await getUser();
-                console.log(123);
                 const isAdmin = user.roles.some(r => r.name === 'admin');
                 if (!isAdmin) {
                     navigate('/', { replace: true });
