@@ -6,7 +6,7 @@ import ErrorComponent from '@/components/ErrorComponent';
 import { useCouponDetail } from '@/admin/pages/Coupons/CouponDetailPage/useCouponDetail';
 import { deleteCoupon } from '@/admin/services/CouponService';
 
-export default function CouponDetailPage(): ReactElement {
+export default function Index(): ReactElement {
   const { id } = useParams<{ id: string }>();
   const couponId = Number(id);
   const navigate = useNavigate();

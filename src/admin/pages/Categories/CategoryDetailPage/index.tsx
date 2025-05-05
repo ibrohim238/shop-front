@@ -9,7 +9,7 @@ import { Category } from '@/models/Category';
 import { deleteCategory } from '@/admin/services/CategoryService';
 import CategoryOrderChart from './CategoryOrderChart';
 
-export default function CategoryDetailPage(): ReactElement {
+export default function Index(): ReactElement {
   const { slug } = useParams<{ slug: string }>();
   const categorySlug = String(slug);
   const navigate = useNavigate();

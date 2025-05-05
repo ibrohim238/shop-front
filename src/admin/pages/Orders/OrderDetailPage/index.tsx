@@ -5,7 +5,7 @@ import ErrorComponent from '@/components/ErrorComponent';
 import { useOrderDetail } from '@/admin/pages/Orders/OrderDetailPage/useOrderDetail';
 import CardOrder from '@/admin/pages/Orders/OrderDetailPage/CardOrder';
 
-export default function OrderDetailPage(): ReactElement {
+export default function Index(): ReactElement {
   const { id } = useParams<{ id: string }>();
   const orderId = Number(id);
   const navigate = useNavigate();

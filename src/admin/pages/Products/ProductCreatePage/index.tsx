@@ -2,7 +2,7 @@ import {useNavigate} from 'react-router';
 import FormProduct from "@/admin/pages/Products/ProductCreatePage/ProductForm.tsx";
 import {Product} from "@/models/Product.ts";
 
-export default function ProductCreatePage() {
+export default function Index() {
     const navigate = useNavigate();
 
     const handleSuccess = (newProduct: Product) => {

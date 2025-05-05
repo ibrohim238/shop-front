@@ -1,5 +1,5 @@
 import {Outlet, Route} from "react-router";
-import HomePage from "@/client/pages/HomePage/HomePage";
+import HomePage from "@/client/pages/HomePage";
 import ProductDetailPage from "@/client/pages/ProductDetailPage";
 import LoginPage from "@/client/pages/LoginPage";
 import RegisterPage from "@/client/pages/RegisterPage";

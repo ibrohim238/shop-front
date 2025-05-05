@@ -2,7 +2,7 @@ import { useNavigate } from 'react-router';
 import FormCategory from '@/admin/pages/Categories/CategoryCreatePage/CategoryForm';
 import type { Category } from '@/models/Category';
 
-export default function CategoryCreatePage() {
+export default function Index() {
   const navigate = useNavigate();
 
   const handleSuccess = (newCategory: Category) => {

@@ -3,7 +3,7 @@ import { useSearchParams } from 'react-router'
 import SidebarCategories from '@/components/SidebarCategories.tsx'
 import ProductSection from '@/client/pages/HomePage/ProductSection.tsx'
 
-export default function HomePage(): ReactElement {
+export default function Index(): ReactElement {
   const [searchParams] = useSearchParams()
   const raw = searchParams.get('categories') || ''
     const selectedCategories = raw

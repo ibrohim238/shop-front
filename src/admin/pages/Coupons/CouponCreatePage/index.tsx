@@ -2,7 +2,7 @@ import { useNavigate } from 'react-router';
 import FormCoupon from '@/admin/pages/Coupons/CouponCreatePage/CouponForm';
 import type { Coupon } from '@/models/Coupon.ts';
 
-export default function CouponCreatePage() {
+export default function Index() {
   const navigate = useNavigate();
 
   const handleSuccess = (newCoupon: Coupon) => {
