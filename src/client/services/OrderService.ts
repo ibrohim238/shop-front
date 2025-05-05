@@ -6,7 +6,7 @@ import {
     ICreateOrderPayload, orderPreview
 } from '@/client/repositories/OrderRepository.ts';
 import {Order, IOrder} from '@/models/Order.ts';
-import {ResponsePagination, PaginationMeta} from '@/models/ResponsePagination.ts';
+import {ResponsePagination, PaginationMeta} from '@/types/Response.ts';
 import {castFilterParams, FilterParams} from "@/types/Params.ts";
 import {Preview} from "@/models/Preview.ts";
 

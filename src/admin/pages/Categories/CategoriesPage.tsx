@@ -3,7 +3,7 @@ import { Link } from 'react-router';
 import { getCategories } from '@/admin/services/CategoryService';
 import type { Category } from '@/models/Category';
 import PaginatorComponent from '@/components/PaginatorComponent.tsx';
-import type { PaginationMeta } from '@/models/ResponsePagination.ts';
+import type { PaginationMeta } from '@/types/Response.ts';
 
 export default function CategoriesPage(): ReactElement {
   const [categories, setCategories] = useState<Category[]>([]);

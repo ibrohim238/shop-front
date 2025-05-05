@@ -5,7 +5,7 @@ import {
   deleteCoupon as deleteCouponRequest 
 } from '@/admin/repositories/CouponRepository';
 import { Coupon } from '@/models/Coupon';
-import { ResponsePagination, PaginationMeta } from '@/models/ResponsePagination.ts';
+import { ResponsePagination, PaginationMeta } from '@/types/Response.ts';
 import { castFilterParams, FilterParams } from '@/types/Params';
 import { CouponDto } from '@/admin/dtos/CouponDto';
 

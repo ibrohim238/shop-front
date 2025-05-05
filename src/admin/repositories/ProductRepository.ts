@@ -1,7 +1,7 @@
 // src/admin/repositories/ProductRepository.ts
 import http from '@/utils/http';
 import { IProduct } from '@/models/Product';
-import { ISingleResponse, IPagination } from '@/models/ResponsePagination.ts';
+import { ISingleResponse, IPagination } from '@/types/Response.ts';
 import {FilterParams} from '@/types/Params';
 import { IProductDto } from '@/admin/dtos/ProductDto';
 

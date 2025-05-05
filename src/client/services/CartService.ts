@@ -4,7 +4,7 @@ import {
     fetchRemoveFromCart, fetchUpdateCartItem
 } from '@/client/repositories/CartRepository.ts';
 import { Cart, ICart } from '@/models/Cart.ts';
-import { ResponsePagination, PaginationMeta } from '@/models/ResponsePagination.ts';
+import { ResponsePagination, PaginationMeta } from '@/types/Response.ts';
 import {castFilterParams, FilterParams} from "@/types/Params.ts";
 
 export async function getCarts(

@@ -1,7 +1,7 @@
 import http from '@/utils/http.ts';
 import { ICouponDto } from '@/admin/dtos/CouponDto';
 import { ICoupon } from '@/models/Coupon.ts';
-import { IPagination, ISingleResponse } from '@/models/ResponsePagination.ts';
+import { IPagination, ISingleResponse } from '@/types/Response.ts';
 import { FilterParams } from '@/types/Params.ts';
 
 /**

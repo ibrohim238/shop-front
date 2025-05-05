@@ -4,7 +4,7 @@ import {
     fetchCategoryById
 } from '@/client/repositories/CategoryRepository.ts';
 import { Category, ICategory } from '@/models/Category.ts';
-import { ResponsePagination, PaginationMeta } from '@/models/ResponsePagination.ts';
+import { ResponsePagination, PaginationMeta } from '@/types/Response.ts';
 import {castFilterParams, FilterParams} from "@/types/Params.ts";
 
 /**

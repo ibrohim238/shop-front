@@ -49,7 +49,7 @@ export class ResponsePagination<T> {
         public readonly meta: PaginationMeta
     ) {}
 
-    public static fromData<U>(data: ResponsePagination<U>): ResponsePagination<U> {
+    public static fromData<U>(data: IPagination<U>): ResponsePagination<U> {
         return new ResponsePagination(
             data.data,
             PaginationMeta.fromData(data.meta),

@@ -7,7 +7,7 @@ import {
     deleteCategory as deleteCategoryRequest,
 } from '@/admin/repositories/CategoryRepository.ts';
 import { Category } from '@/models/Category';
-import { ResponsePagination, PaginationMeta } from '@/models/ResponsePagination.ts';
+import { ResponsePagination, PaginationMeta } from '@/types/Response.ts';
 import {castFilterParams, FilterParams} from "@/types/Params.ts";
 import type { ICategory } from '@/models/Category';
 

@@ -4,7 +4,7 @@ import { Link } from 'react-router';
 import { getProducts } from '@/admin/services/ProductService.ts';
 import type { Product } from '@/models/Product.ts';
 import PaginatorComponent from '@/components/PaginatorComponent.tsx';
-import type { PaginationMeta } from '@/models/ResponsePagination.ts';
+import type { PaginationMeta } from '@/types/Response.ts';
 
 export default function  ProductsPage(): ReactElement {
     const [products, setProducts] = useState<Product[]>([]);

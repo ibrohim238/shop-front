@@ -1,7 +1,7 @@
 // src/common/services/MediaService.ts
 import { fetchMedia, storeMedia as storeMediaRequest } from '@/common/repositories/MediaRepository';
 import { Media, IMedia } from '@/models/Media';
-import { ResponsePagination, PaginationMeta } from '@/models/ResponsePagination.ts';
+import { ResponsePagination, PaginationMeta } from '@/types/Response.ts';
 import {castFilterParams, FilterParams} from '@/types/Params';
 
 /**

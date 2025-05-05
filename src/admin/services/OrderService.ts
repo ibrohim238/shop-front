@@ -3,7 +3,7 @@ import {
   fetchOrderById as fetchOrderByIdRequest
 } from '@/admin/repositories/OrderRepository';
 import { Order, IOrder } from '@/models/Order';
-import { ResponsePagination, PaginationMeta } from '@/models/ResponsePagination.ts';
+import { ResponsePagination, PaginationMeta } from '@/types/Response.ts';
 import { castFilterParams, FilterParams } from '@/types/Params';
 
 /**

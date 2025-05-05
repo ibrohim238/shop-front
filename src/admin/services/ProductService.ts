@@ -6,7 +6,7 @@ import {
   deleteProduct as deleteProductRequest
 } from '@/admin/repositories/ProductRepository';
 import { Product, IProduct } from '@/models/Product';
-import { ResponsePagination, PaginationMeta } from '@/models/ResponsePagination.ts';
+import { ResponsePagination, PaginationMeta } from '@/types/Response.ts';
 import { castFilterParams, FilterParams } from '@/types/Params';
 import { ProductDto } from '@/admin/dtos/ProductDto';
 

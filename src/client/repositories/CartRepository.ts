@@ -1,6 +1,6 @@
 import http from '@/utils/http.ts';
 import { ICart } from '@/models/Cart.ts';
-import { IPagination, ISingleResponse } from '@/models/ResponsePagination.ts';
+import { IPagination, ISingleResponse } from '@/types/Response.ts';
 import {FilterParams} from "@/types/Params.ts";
 
 export async function fetchCarts(

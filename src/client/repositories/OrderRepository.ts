@@ -1,7 +1,7 @@
 // src/repositories/OrderRepository.ts
 import http from '@/utils/http.ts';
 import { IOrder } from '@/models/Order.ts';
-import { IPagination, ISingleResponse } from '@/models/ResponsePagination.ts';
+import { IPagination, ISingleResponse } from '@/types/Response.ts';
 import {FilterParams} from "@/types/Params.ts";
 import {IPreview} from "@/models/Preview.ts";
 

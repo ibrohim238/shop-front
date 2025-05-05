@@ -1,6 +1,6 @@
 import { fetchProducts, fetchProductById } from '@/client/repositories/ProductRepository.ts';
 import { Product, IProduct } from '@/models/Product.ts';
-import {ResponsePagination, PaginationMeta, IPagination, ISingleResponse} from '@/models/ResponsePagination.ts';
+import {ResponsePagination, PaginationMeta, IPagination, ISingleResponse} from '@/types/Response.ts';
 import {castFilterParams, FilterParams} from "@/types/Params.ts";
 
 

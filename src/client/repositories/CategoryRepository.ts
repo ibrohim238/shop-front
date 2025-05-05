@@ -1,7 +1,7 @@
 // src/repositories/CategoryRepository.ts
 import http from '@/utils/http.ts';
 import { ICategory } from '@/models/Category.ts';
-import { IPagination, ISingleResponse } from '@/models/ResponsePagination.ts';
+import { IPagination, ISingleResponse } from '@/types/Response.ts';
 import { FilterParams } from "@/types/Params.ts";
 
 /**

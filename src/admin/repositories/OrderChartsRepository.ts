@@ -1,7 +1,7 @@
 import http from '@/utils/http';
 import { FilterParams } from '@/types/Params';
 import {IOrderChart} from "@/models/OrderChart.ts";
-import {IResponse} from "@/models/ResponsePagination.ts";
+import {IResponse} from "@/types/Response.ts";
 
 
 export async function fetchOrders(
