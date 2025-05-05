@@ -14,7 +14,7 @@ export default function HomePage(): ReactElement {
 
     return (
     <div className="container mx-auto p-6 flex gap-6">
-      <SidebarCategories />
+      <SidebarCategories selectedCategories={selectedCategories}/>
       <ProductSection selectedCategories={selectedCategories} />
     </div>
   )

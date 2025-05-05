@@ -1,21 +1,17 @@
-// src/components/SidebarCategories.tsx
 import { useState, useEffect, ReactElement } from 'react'
 import { useSearchParams } from 'react-router'
 import { getCategories } from '@/client/services/CategoryService.ts'
 import type { Category } from '@/models/Category.ts'
 import { ChevronRight, ChevronDown } from 'lucide-react'
 
-export default function SidebarCategories(): ReactElement {
+export interface Props {
+    selectedCategories: number[]
+}
+
+export default function SidebarCategories({selectedCategories}: Props): ReactElement {
     const [categories, setCategories] = useState<Category[]>([])
     const [loading, setLoading] = useState(true)
-    const [searchParams, setSearchParams] = useSearchParams()
-
-    // выбранные категории из query-параметра «categories»
-    const raw = searchParams.get('categories') || ''
-    const selectedCategories: number[] = raw
-        .split(',')
-        .map(s => Number(s))
-        .filter(n => !isNaN(n))
+    const [searchParams, setSearchParams] = useSearchParams();
 
     // состояние для раскрытых узлов
     const [expanded, setExpanded] = useState<number[]>([])
