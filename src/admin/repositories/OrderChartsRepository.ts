@@ -6,10 +6,10 @@ import {IResponse} from "@/models/ResponsePagination.ts";
 
 export async function fetchOrders(
     format: string,
-    groupBy: string = 'product',
+    type: string = 'product',
     filter: FilterParams = {}
 ): Promise<IResponse<IOrderChart>> {
-    const params: FilterParams = { format, group_by: groupBy, ...filter };
+    const params: FilterParams = { format, type, ...filter };
     const { data } = await http.get<IResponse<IOrderChart>>(
         '/private/admin/orders/charts',
         { params }

@@ -6,7 +6,7 @@ import { FilterParams } from '@/types/Params';
 export function useProductOrderCharts(
   productId: number,
   format = 'daily',
-  groupBy: string = 'category',
+  type: string = 'category',
 ) {
   const [charts, setCharts] = useState<OrderChart[]>([]);
   const [loading, setLoading] = useState(true);
@@ -14,7 +14,7 @@ export function useProductOrderCharts(
 
   useEffect(() => {
     setLoading(true);
-    getOrderCharts(format, groupBy, { product_id: productId } as FilterParams)
+    getOrderCharts(format, type, { model_id: productId } as FilterParams)
       .then(data => {
         setCharts(data);
       })
@@ -23,7 +23,7 @@ export function useProductOrderCharts(
         setError('Не удалось загрузить данные графика заказов');
       })
       .finally(() => setLoading(false));
-  }, [productId, format, groupBy]);
+  }, [productId, format, type]);
 
   return { charts, loading, error } as const;
 }

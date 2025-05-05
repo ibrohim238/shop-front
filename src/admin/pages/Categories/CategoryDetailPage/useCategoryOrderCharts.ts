@@ -14,7 +14,7 @@ export function useCategoryOrderCharts(
 
   useEffect(() => {
     setLoading(true);
-    getOrderCharts(format, groupBy, { category_id: categoryId } as FilterParams)
+    getOrderCharts(format, groupBy, { model_id: categoryId } as FilterParams)
       .then(data => setCharts(data))
       .catch(err => {
         console.error(err);

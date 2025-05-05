@@ -8,14 +8,14 @@ import { castFilterParams, FilterParams } from '@/types/Params';
  */
 export async function getOrderCharts(
   format = 'daily',
-  groupBy: string = 'product',
+  type: string = 'product',
   filter: FilterParams = {}
 ): Promise<OrderChart[]> {
   const filterParams = castFilterParams(filter);
 
   const { data } = await fetchOrderCharts(
     format,
-    groupBy,
+      type,
     filterParams,
   );
 
