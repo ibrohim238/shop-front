@@ -28,8 +28,8 @@ export interface IOrder {
     id: number;
     total_amount: number;
     status: string;
-    items: IOrderItem[];
-    coupon?: ICoupon;
+    items: IOrderItem[]|null;
+    coupon: ICoupon|null;
     created_at: string;
     updated_at: string;
 }
@@ -39,7 +39,7 @@ export class Order {
         public readonly id: number,
         public readonly total_amount: number,
         public readonly status: string,
-        public readonly items: OrderItem[],
+        public readonly items: OrderItem[]|null,
         public readonly coupon: Coupon | null,
         public readonly created_at: Date,
         public readonly updated_at: Date
@@ -50,7 +50,7 @@ export class Order {
             data.id,
             data.total_amount,
             data.status,
-            data.items.map(OrderItem.fromData),
+            data.items ? data.items.map(OrderItem.fromData) : null,
             data.coupon ? Coupon.fromData(data.coupon) : null,
             new Date(data.created_at),
             new Date(data.updated_at)
