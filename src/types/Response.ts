@@ -68,3 +68,12 @@ export class Response<T> {
         );
     }
 }
+
+
+
+export class IErrorsResponse{
+    constructor(
+        public readonly errors: Record<string, string[]>,
+        public readonly message: string,
+    ) {}
+}

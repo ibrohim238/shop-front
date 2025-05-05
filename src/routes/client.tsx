@@ -1,13 +1,13 @@
 import {Outlet, Route} from "react-router";
-import HomePage from "@/client/pages/HomePage.tsx";
-import ProductDetailPage from "@/client/pages/ProductDetailPage.tsx";
-import LoginPage from "@/client/pages/LoginPage.tsx";
-import RegisterPage from "@/client/pages/RegisterPage.tsx";
-import CartPage from "@/client/pages/CartPage.tsx";
-import OrdersPage from "@/client/pages/OrdersPage.tsx";
-import OrderDetailPage from "@/client/pages/OrderDetailPage.tsx";
-import MainLayout from "@/layouts/MainLayout.tsx";
-import RequireAuth from "@/routes/RequireAuth.tsx";
+import HomePage from "@/client/pages/HomePage/HomePage";
+import ProductDetailPage from "@/client/pages/ProductDetailPage";
+import LoginPage from "@/client/pages/LoginPage";
+import RegisterPage from "@/client/pages/RegisterPage";
+import CartPage from "@/client/pages/CartPage";
+import OrdersPage from "@/client/pages/OrdersPage";
+import OrderDetailPage from "@/client/pages/OrderDetailPage";
+import MainLayout from "@/layouts/MainLayout";
+import RequireAuth from "@/routes/RequireAuth";
 
 
 function PublicRoutes() {

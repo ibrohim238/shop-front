@@ -1,22 +1,26 @@
-import { useState, ChangeEvent, FormEvent, ReactElement } from 'react';
-import { CategoryDto } from '@/admin/dtos/CategoryDto';
-import { storeCategory } from '@/admin/services/CategoryService';
-import type { Category } from '@/models/Category';
-import FileUploadComponent from '@/components/FileUploadComponent';
-import SelectComponent from '@/components/SelectComponent';
-import { useCategories } from '@/admin/hooks/useCategories';
-import { storeMedia } from '@/common/services/MediaService';
+import { useState, ChangeEvent, FormEvent, ReactElement } from 'react'
+import axios, { AxiosError } from 'axios'
+import { CategoryDto } from '@/admin/dtos/CategoryDto'
+import { storeCategory } from '@/admin/services/CategoryService'
+import type { Category } from '@/models/Category'
+import FileUploadComponent from '@/components/FileUploadComponent'
+import SelectComponent from '@/components/SelectComponent'
+import { useCategories } from '@/admin/hooks/useCategories'
+import { storeMedia } from '@/common/services/MediaService'
+import { IErrorsResponse } from '@/types/Response'
 
 interface ICategoryFormData {
-  name: string;
-  description: string;
-  newMedia: File | null;
-  parentId: number | null;
+  name: string
+  description: string
+  newMedia: File | null
+  parentId: number | null
 }
 
 interface Props {
-  success: (category: Category) => void;
+  success: (category: Category) => void
 }
+
+type FormErrors = Partial<Record<keyof ICategoryFormData, string>>
 
 export default function CategoryForm({ success }: Props): ReactElement {
   const [formData, setFormData] = useState<ICategoryFormData>({
@@ -24,55 +28,92 @@ export default function CategoryForm({ success }: Props): ReactElement {
     description: '',
     newMedia: null,
     parentId: null,
-  });
-  const [saving, setSaving] = useState(false);
-  const { loadCategories } = useCategories();
+  })
+  const [errors, setErrors] = useState<FormErrors>({})
+  const [saving, setSaving] = useState(false)
+  const { loadCategories } = useCategories()
+
+  const inputClass = (field: keyof ICategoryFormData) =>
+    `mt-1 block w-full border rounded p-2 ${
+      errors[field] ? 'border-red-500' : ''
+    }`
 
   const handleChange = (e: ChangeEvent<HTMLInputElement | HTMLTextAreaElement>) => {
-    if (e.target.type === 'file') {
-      const target = e.target as HTMLInputElement;
-      const file = target.files ? target.files[0] : null;
-      setFormData(prev => ({
-        ...prev,
-        newMedia: file,
-      }));
-      return;
+    const { name, value, type } = e.target
+    if (type === 'file') {
+      const target = e.target as HTMLInputElement
+      const file = target.files ? target.files[0] : null
+      setFormData(prev => ({ ...prev, newMedia: file }))
+      setErrors(prev => ({ ...prev, newMedia: undefined }))
+      return
     }
     setFormData(prev => ({
       ...prev,
-      [e.target.name]: e.target.value,
-    }));
-  };
+      [name]: value,
+    }))
+    setErrors(prev => ({ ...prev, [name]: undefined }))
+  }
 
   const handleParentChange = (value: number | null) => {
-    setFormData(prev => ({
-      ...prev,
-      parentId: value,
-    }));
-  };
+    setFormData(prev => ({ ...prev, parentId: value }))
+    setErrors(prev => ({ ...prev, parentId: undefined }))
+  }
+
+  const validate = (): FormErrors => {
+    const errs: FormErrors = {}
+    if (!formData.name.trim()) {
+      errs.name = 'Название обязательно'
+    }
+    return errs
+  }
 
   const handleSubmit = async (e: FormEvent) => {
-    e.preventDefault();
-    setSaving(true);
+    e.preventDefault()
+    const clientErrors = validate()
+    if (Object.keys(clientErrors).length) {
+      setErrors(clientErrors)
+      return
+    }
+
+    setSaving(true)
+    setErrors({})
 
     try {
-      let mediaId: number | null = null;
+      let mediaId: number | null = null
       if (formData.newMedia) {
-        const medias = await storeMedia([formData.newMedia]);
+        const medias = await storeMedia([formData.newMedia])
         if (medias.length > 0) {
-          mediaId = medias[0].id;
+          mediaId = medias[0].id
         }
       }
-      const newCategory = await storeCategory(
-        new CategoryDto(formData.name, formData.description, mediaId, formData.parentId)
-      );
-      success(newCategory);
-    } catch (error) {
-      console.error(error);
+
+      const dto = new CategoryDto(
+        formData.name,
+        formData.description,
+        mediaId,
+        formData.parentId
+      )
+      const newCategory = await storeCategory(dto)
+      success(newCategory)
+    } catch (err: unknown) {
+      if (axios.isAxiosError(err)) {
+        const axiosErr = err as AxiosError<IErrorsResponse>
+        const data = axiosErr.response?.data
+        if (data?.errors) {
+          const serverErrors: FormErrors = {}
+          for (const key in data.errors) {
+            const msgs = data.errors[key] || []
+            serverErrors[key as keyof ICategoryFormData] = msgs[0]
+          }
+          setErrors(serverErrors)
+        }
+      } else {
+        console.error(err)
+      }
     } finally {
-      setSaving(false);
+      setSaving(false)
     }
-  };
+  }
 
   return (
     <form onSubmit={handleSubmit} className="bg-white shadow rounded-lg p-6 space-y-6">
@@ -83,9 +124,9 @@ export default function CategoryForm({ success }: Props): ReactElement {
           type="text"
           value={formData.name}
           onChange={handleChange}
-          className="mt-1 block w-full border rounded p-2"
-          required
+          className={inputClass('name')}
         />
+        {errors.name && <p className="text-red-500 text-sm mt-1">{errors.name}</p>}
       </div>
 
       <div>
@@ -94,9 +135,12 @@ export default function CategoryForm({ success }: Props): ReactElement {
           name="description"
           value={formData.description}
           onChange={handleChange}
-          className="mt-1 block w-full border rounded p-2"
+          className={inputClass('description')}
           rows={4}
         />
+        {errors.description && (
+          <p className="text-red-500 text-sm mt-1">{errors.description}</p>
+        )}
       </div>
 
       <div>
@@ -109,6 +153,9 @@ export default function CategoryForm({ success }: Props): ReactElement {
           placeholder="Без родительской категории"
           loadOptions={loadCategories}
         />
+        {errors.parentId && (
+          <p className="text-red-500 text-sm mt-1">{errors.parentId}</p>
+        )}
       </div>
 
       <div>
@@ -118,6 +165,9 @@ export default function CategoryForm({ success }: Props): ReactElement {
           multiple={false}
           onSelect={handleChange}
         />
+        {errors.newMedia && (
+          <p className="text-red-500 text-sm mt-1">{errors.newMedia}</p>
+        )}
       </div>
 
       <div className="flex justify-end gap-4">
@@ -137,5 +187,5 @@ export default function CategoryForm({ success }: Props): ReactElement {
         </button>
       </div>
     </form>
-  );
+  )
 }

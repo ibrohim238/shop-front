@@ -8,6 +8,7 @@ export interface ICategory {
     media: IMedia | null;
     description: string;
     parent_id: number | null;
+    children: ICategory[];
     created_at: string;
     updated_at: string;
 }
@@ -20,6 +21,7 @@ export class Category {
         public readonly media: Media | null,
         public readonly description: string,
         public readonly parent_id: number | null,
+        public readonly children: Category[]|null,
         public readonly created_at: Date,
         public readonly updated_at: Date
     ) {}
@@ -32,6 +34,7 @@ export class Category {
             data.media ? Media.fromData(data.media) : null,
             data.description,
             data.parent_id,
+            data.children ? data.children.map(Category.fromData) : [],
             new Date(data.created_at),
             new Date(data.updated_at)
         );

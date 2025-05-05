@@ -1,12 +1,13 @@
 import { useState, ChangeEvent, FormEvent, ReactElement } from 'react'
 import axios, { AxiosError } from 'axios'
-import { storeMedia } from '@/common/services/MediaService.ts'
-import { ProductDto } from '@/admin/dtos/ProductDto.ts'
-import { storeProduct } from '@/admin/services/ProductService.ts'
-import FileUploadComponent from '@/components/FileUploadComponent.tsx'
-import MultiSelectComponent from '@/components/MultiSelectComponent.tsx'
-import type { Product } from '@/models/Product.ts'
-import { useCategories } from '@/admin/hooks/useCategories.ts'
+import { storeMedia } from '@/common/services/MediaService'
+import { ProductDto } from '@/admin/dtos/ProductDto'
+import { storeProduct } from '@/admin/services/ProductService'
+import FileUploadComponent from '@/components/FileUploadComponent'
+import MultiSelectComponent from '@/components/MultiSelectComponent'
+import type { Product } from '@/models/Product'
+import { useCategories } from '@/admin/hooks/useCategories'
+import { IErrorsResponse } from '@/types/Response'
 
 interface IProductForm {
   name: string
@@ -47,6 +48,7 @@ export default function ProductForm({ success }: Props): ReactElement {
     e: ChangeEvent<HTMLInputElement | HTMLTextAreaElement>
   ) => {
     const { name, value, type } = e.target
+
     if (type === 'file') {
       const files = (e.target as HTMLInputElement).files || []
       setProductForm(prev => ({
@@ -56,12 +58,11 @@ export default function ProductForm({ success }: Props): ReactElement {
       setErrors(prev => ({ ...prev, newMedias: undefined }))
       return
     }
+
     setProductForm(prev => ({
       ...prev,
       [name]:
-        type === 'number'
-          ? Number(value)
-          : value,
+        type === 'number' ? Number(value) : value,
     }))
     setErrors(prev => ({ ...prev, [name]: undefined }))
   }
@@ -77,7 +78,6 @@ export default function ProductForm({ success }: Props): ReactElement {
     if (productForm.quantity < 0) {
       errs.quantity = 'Количество не может быть отрицательным'
     }
-    // добавить другие проверки по необходимости
     return errs
   }
 
@@ -94,6 +94,7 @@ export default function ProductForm({ success }: Props): ReactElement {
 
     try {
       const mediaIds: number[] = []
+
       if (productForm.newMedias.length) {
         const medias = await storeMedia(productForm.newMedias)
         mediaIds.push(...medias.map(m => m.id))
@@ -112,15 +113,17 @@ export default function ProductForm({ success }: Props): ReactElement {
       success(newProduct)
     } catch (err: unknown) {
       if (axios.isAxiosError(err)) {
-        const axiosErr = err as AxiosError<{ errors?: Record<string, string[]> }>
+        const axiosErr = err as AxiosError<IErrorsResponse>
         const data = axiosErr.response?.data
+
         if (data?.errors) {
-          // преобразуем массивы ошибок в строку
           const serverErrors: FormErrors = {}
+
           for (const key in data.errors) {
-            serverErrors[key as keyof IProductForm] =
-              data.errors[key]?.join(' ') || 'Ошибка'
+            const fieldErrors = data.errors[key] || []
+            serverErrors[key as keyof IProductForm] = fieldErrors[0]
           }
+
           setErrors(serverErrors)
         }
       } else {
@@ -138,6 +141,7 @@ export default function ProductForm({ success }: Props): ReactElement {
 
   return (
     <form onSubmit={handleSubmit} className="bg-white shadow rounded-lg p-6 space-y-6">
+      {/* Название */}
       <div>
         <label className="block text-sm font-medium text-gray-700">Название</label>
         <input
@@ -147,11 +151,10 @@ export default function ProductForm({ success }: Props): ReactElement {
           onChange={handleChange}
           className={inputClass('name')}
         />
-        {errors.name && (
-          <p className="text-red-500 text-sm mt-1">{errors.name}</p>
-        )}
+        {errors.name && <p className="text-red-500 text-sm mt-1">{errors.name}</p>}
       </div>
 
+      {/* Описание */}
       <div>
         <label className="block text-sm font-medium text-gray-700">Описание</label>
         <textarea
@@ -166,6 +169,7 @@ export default function ProductForm({ success }: Props): ReactElement {
         )}
       </div>
 
+      {/* Цена, Количество, Категории */}
       <div className="grid grid-cols-2 gap-4">
         <div>
           <label className="block text-sm font-medium text-gray-700">Цена (RUB)</label>
@@ -176,9 +180,7 @@ export default function ProductForm({ success }: Props): ReactElement {
             onChange={handleChange}
             className={inputClass('price')}
           />
-          {errors.price && (
-            <p className="text-red-500 text-sm mt-1">{errors.price}</p>
-          )}
+          {errors.price && <p className="text-red-500 text-sm mt-1">{errors.price}</p>}
         </div>
         <div>
           <label className="block text-sm font-medium text-gray-700">Количество</label>
@@ -208,6 +210,10 @@ export default function ProductForm({ success }: Props): ReactElement {
             <p className="text-red-500 text-sm mt-1">{errors.categories}</p>
           )}
         </div>
+      </div>
+
+      {/* Загрузка изображений и сообщение об ошибке для поля medias */}
+      <div>
         <FileUploadComponent
           label="Изображения"
           accept="image/*"
@@ -216,8 +222,12 @@ export default function ProductForm({ success }: Props): ReactElement {
         {errors.newMedias && (
           <p className="text-red-500 text-sm mt-1">{errors.newMedias}</p>
         )}
+        {errors.medias && (
+          <p className="text-red-500 text-sm mt-1">{errors.medias}</p>
+        )}
       </div>
 
+      {/* Кнопки */}
       <div className="flex justify-end gap-4">
         <button
           type="button"
