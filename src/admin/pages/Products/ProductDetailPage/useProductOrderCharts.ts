@@ -1,6 +1,6 @@
 import { useState, useEffect } from 'react';
-import { getOrderCharts } from '@/admin/services/OrderChartsService';
-import { OrderChart } from '@/models/OrderChart';
+import { getCharts } from '@/admin/services/OrderItemReporterService.ts';
+import { OrderItemReporter } from '@/models/OrderItemReporter.ts';
 import { FilterParams } from '@/types/Params';
 
 export function useProductOrderCharts(
@@ -8,13 +8,13 @@ export function useProductOrderCharts(
   format = 'daily',
   type: string = 'category',
 ) {
-  const [charts, setCharts] = useState<OrderChart[]>([]);
+  const [charts, setCharts] = useState<OrderItemReporter[]>([]);
   const [loading, setLoading] = useState(true);
   const [error, setError] = useState<string | null>(null);
 
   useEffect(() => {
     setLoading(true);
-    getOrderCharts(format, type, { model_id: productId } as FilterParams)
+    getCharts(format, type, { model_id: productId } as FilterParams)
       .then(data => {
         setCharts(data);
       })
