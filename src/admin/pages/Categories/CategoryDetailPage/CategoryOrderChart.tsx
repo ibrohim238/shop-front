@@ -1,39 +1,69 @@
-import { ReactElement } from 'react';
-import { Card, Title } from '@tremor/react';
-import LoadingComponent from '@/components/LoadingComponent';
-import ErrorComponent from '@/components/ErrorComponent';
-import LineGraphComponent from '@/components/LineGraphComponent';
-import { useCategoryOrderCharts } from './useCategoryOrderCharts';
+import { ReactElement, useState } from 'react'
+import { Card, Title } from '@tremor/react'
+import LoadingComponent from '@/components/LoadingComponent'
+import ErrorComponent from '@/components/ErrorComponent'
+import LineGraphComponent from '@/components/LineGraphComponent'
+import { useCategoryOrderCharts } from './useCategoryOrderCharts'
 
 interface Props {
-  categoryId: number;
-  format?: string;
+  categoryId: number
 }
 
-interface ChartData extends Record<string, string | number> {
-  date: string;
-  quantity: number;
+interface ChartData {
+  [key: string]: string | number
+  date: string
+  quantity: number
 }
+
+type Period = 'day' | 'week' | 'month' | 'year';
+
+const PERIODS: { label: string; value: Period }[] = [
+  { label: 'День', value: 'day' },
+  { label: 'Неделя', value: 'week' },
+  { label: 'Месяц', value: 'month' },
+  { label: 'Год', value: 'year' },
+];
 
 export default function CategoryOrderChart({
   categoryId,
-  format = 'daily',
 }: Props): ReactElement {
-  const { charts, loading, error } = useCategoryOrderCharts(categoryId, format, 'category');
+  const [period, setPeriod] = useState<Period>('day')
+  const { charts, loading, error } = useCategoryOrderCharts(
+    categoryId,
+    period,
+    'category',
+  )
 
-  if (loading) return <LoadingComponent />;
-  if (error) return <ErrorComponent message={error} />;
+  if (loading) return <LoadingComponent />
+  if (error) return <ErrorComponent message={error} />
 
-  const data: ChartData[] = charts.map(c => ({
+  const data: ChartData[] = charts.map((c) => ({
     date: c.date.toLocaleDateString('ru-RU'),
     quantity: c.quantity,
-  }));
+  }))
 
   return (
     <Card className="mt-6">
       <Title>График заказов по категории</Title>
+
+      <div className="mt-4 flex space-x-2">
+        {PERIODS.map(({ label, value }) => (
+          <button
+            key={value}
+            onClick={() => setPeriod(value)}
+            className={`px-3 py-1 rounded ${
+              period === value
+                ? 'bg-blue-600 text-white'
+                : 'bg-gray-200 text-gray-700 hover:bg-gray-300'
+            }`}
+          >
+            {label}
+          </button>
+        ))}
+      </div>
+
       <div className="h-60 mt-4">
-        <LineGraphComponent
+        <LineGraphComponent<ChartData>
           data={data}
           xKey="date"
           yKey="quantity"
@@ -43,5 +73,5 @@ export default function CategoryOrderChart({
         />
       </div>
     </Card>
-  );
+  )
 }
