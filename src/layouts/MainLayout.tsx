@@ -1,15 +1,11 @@
 // src/layouts/MainLayout.tsx
-import type { ReactElement, ReactNode } from 'react';
-import { Link, useNavigate } from 'react-router';
-import { logout, isAuthenticated } from '@/common/services/AuthService.ts';
+import {ReactElement} from 'react';
+import {Link, Outlet, useNavigate} from 'react-router';
+import {useAuth} from "@/common/context/provider/AuthContextProvider.tsx";
 
-interface MainLayoutProps {
-    children: ReactNode;
-}
-
-export default function MainLayout({ children }: MainLayoutProps): ReactElement {
+export default function MainLayout(): ReactElement {
     const navigate = useNavigate();
-    const isAuth = isAuthenticated();
+    const { isAuth, logout } = useAuth();
 
     const handleLogout = (): void => {
         logout();
@@ -59,7 +55,7 @@ export default function MainLayout({ children }: MainLayoutProps): ReactElement 
             </header>
 
             <main className="flex-grow container mx-auto p-6">
-                {children}
+                <Outlet/>
             </main>
 
             <footer className="bg-gray-100 text-gray-600">

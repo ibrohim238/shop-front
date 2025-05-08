@@ -1,19 +1,15 @@
 // src/common/components/RequireAdmin.tsx
-import { ReactElement, ReactNode, useEffect, useState } from 'react';
-import { useNavigate } from 'react-router';
+import { ReactElement, useEffect, useState } from 'react';
+import {Outlet, useNavigate} from 'react-router';
 import { getUser } from '@/common/services/UserService';
 import { User } from '@/models/User';
-
-interface RequireAdminProps {
-    children: ReactNode;
-}
 
 /**
  * Обёртка для админ‑страниц.
  * Проверяет роль текущего пользователя и
  * перенаправляет не‑админа на главную.
  */
-export default function RequireAdmin({ children }: RequireAdminProps): ReactElement {
+export default function RequireAdmin(): ReactElement {
     const navigate = useNavigate();
     const [checking, setChecking] = useState(true);
 
@@ -39,5 +35,5 @@ export default function RequireAdmin({ children }: RequireAdminProps): ReactElem
         return <div className="flex items-center justify-center h-screen">Проверка доступа…</div>;
     }
 
-    return <>{children}</>;
+    return <Outlet />;
 }

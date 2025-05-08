@@ -62,7 +62,7 @@ export default function CategoryOrderChart({
         ))}
       </div>
 
-      <div className="h-60 mt-4">
+      <div className="h-80 mt-4">
         <LineGraphComponent<ChartData>
           data={data}
           xKey="date"

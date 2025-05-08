@@ -1,4 +1,4 @@
-// src/utils/interceptors.ts
+    // src/utils/interceptors.ts
 import {
     AxiosError,
     AxiosInstance,
@@ -31,6 +31,13 @@ const onResponse = (response: AxiosResponse): AxiosResponse => {
 };
 
 const onResponseError = (error: AxiosError): Promise<AxiosError> => {
+    if (error.response?.status === 401) {
+        localStorage.removeItem("token");
+        localStorage.removeItem("refresh_token");
+        // Для React-Router v6 можно window.location.replace или window.location.href
+        window.location.replace("/login");
+    }
+
     console.error(`[response error]`, error);
     return Promise.reject(error);
 };

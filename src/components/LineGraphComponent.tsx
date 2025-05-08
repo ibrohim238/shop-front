@@ -28,12 +28,18 @@ export default function LineGraphComponent<
   height = '100%',
   xTickAngle = -45
 }: LineGraphComponentProps<T>): ReactElement {
+  // Преобразуем значения yKey в числа, чтобы они точно были number
+  const preparedData = data.map(item => ({
+    ...item,
+    [yKey]: Number(item[yKey])
+  }));
+
   return (
     <div style={{ width: '100%', height }}>
       <ResponsiveContainer width="100%" height="100%">
         <ReLineChart
-          data={data}
-          margin={{ top: 20, right: 30, left: 0, bottom: 5 }}
+          data={preparedData}
+          margin={{ top: 20, right: 30, left: 0, bottom: 60 }}
         >
           <CartesianGrid strokeDasharray="3 3" />
           <XAxis
@@ -43,10 +49,17 @@ export default function LineGraphComponent<
             textAnchor="end"
             height={60}
           />
-          <YAxis tick={{ fontSize: 14, fill: '#4A5568' }} />
-          <Tooltip
-            formatter={(value: string | number) => String(value)}
+          <YAxis
+            type="number"
+            tick={{ fontSize: 14, fill: '#4A5568' }}
+            // от нуля (или ниже, если есть отрицательные) до максимума
+            domain={[
+              (dataMin: number) => Math.min(0, dataMin),
+              (dataMax: number) => dataMax
+            ]}
+            padding={{ top: 20 }}
           />
+          <Tooltip formatter={(value: string | number) => String(value)} />
           <Line
             type="monotone"
             dataKey={String(yKey)}

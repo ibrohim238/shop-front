@@ -1,16 +1,12 @@
 import type { ReactElement } from 'react';
-import { Navigate, useLocation } from 'react-router';
+import {Navigate, Outlet} from 'react-router';
+import {useAuth} from "@/common/context/provider/AuthContextProvider.tsx";
 
-interface RequireAuthProps {
-    children: ReactElement;
-}
+export default function RequireAuth(): ReactElement {
+    const { isAuth } = useAuth();
 
-export default function RequireAuth({ children }: RequireAuthProps): ReactElement {
-    const token = localStorage.getItem('token');
-    const location = useLocation();
-
-    if (!token) {
-        return <Navigate to="/login" state={{ from: location }} replace />;
+    if (!isAuth) {
+        return <Navigate to="/login" replace />;
     }
-    return children;
+    return <Outlet />;
 }

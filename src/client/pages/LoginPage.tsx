@@ -1,32 +1,24 @@
 // src/pages/LoginPage.tsx
-import { useState, useEffect, ReactElement, FormEvent } from 'react';
-import { useNavigate, useLocation } from 'react-router';
-import { authenticate, isAuthenticated } from '@/common/services/AuthService.ts';
+import { useState, ReactElement, FormEvent } from 'react';
+import { useNavigate } from 'react-router';
+import {useAuth} from "@/common/context/provider/AuthContextProvider.tsx";
 
 export default function LoginPage(): ReactElement {
     const navigate = useNavigate();
-    const location = useLocation() as { state?: { from: Location } };
-    const from = location.state?.from?.pathname || '/';
+    const { login } = useAuth();
 
     const [username, setUsername] = useState<string>('');
     const [password, setPassword] = useState<string>('');
     const [loading, setLoading] = useState<boolean>(false);
     const [error, setError] = useState<string | null>(null);
 
-    // Если уже авторизован, сразу перенаправляем
-    useEffect(() => {
-        if (isAuthenticated()) {
-            navigate(from, { replace: true });
-        }
-    }, [navigate, from]);
-
     const handleSubmit = async (e: FormEvent) => {
         e.preventDefault();
         setLoading(true);
         setError(null);
         try {
-            await authenticate(username, password);
-            navigate(from, { replace: true });
+            await login(username, password);
+            navigate('/', { replace: true });
         } catch {
             setError('Неверное имя пользователя или пароль');
         } finally {
