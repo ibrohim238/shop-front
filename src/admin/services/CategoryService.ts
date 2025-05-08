@@ -1,4 +1,3 @@
-// src/services/CategoryService.ts
 import {
     fetchCategories,
     fetchCategoryBySlug,
@@ -10,6 +9,7 @@ import { Category } from '@/models/Category';
 import { ResponsePagination, PaginationMeta } from '@/types/Response.ts';
 import {castFilterParams, FilterParams} from "@/types/Params.ts";
 import type { ICategory } from '@/models/Category';
+import {CategoryDto} from "@/admin/dtos/CategoryDto.ts";
 
 /**
  * Получить страницу категорий.
@@ -41,16 +41,16 @@ export async function getCategoryBySlug(slug: string): Promise<Category> {
 /**
  * Создать новую категорию.
  */
-export async function storeCategory(categoryData: Partial<ICategory>): Promise<Category> {
-  const { data } = await storeCategoryRequest(categoryData);
+export async function storeCategory(categoryData: CategoryDto): Promise<Category> {
+  const { data } = await storeCategoryRequest(categoryData.toApi());
   return Category.fromData(data);
 }
 
 /**
  * Обновить категорию по Slug.
  */
-export async function updateCategory(slug: string, categoryData: Partial<ICategory>): Promise<Category> {
-  const { data } = await updateCategoryRequest(slug, categoryData);
+export async function updateCategory(slug: string, categoryData: CategoryDto): Promise<Category> {
+  const { data } = await updateCategoryRequest(slug, categoryData.toApi());
   return Category.fromData(data);
 }
 

@@ -1,4 +1,3 @@
-// src/admin/dtos/ProductDto.ts
 export interface IProductDto {
     name: string,
     description: string,
@@ -8,7 +7,6 @@ export interface IProductDto {
     categories: number[] | null,
 }
 
-// src/admin/dtos/ProductDto.ts
 export class ProductDto {
     constructor(
         public readonly name: string,

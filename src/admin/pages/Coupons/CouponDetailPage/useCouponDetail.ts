@@ -1,5 +1,5 @@
 import { useState, useEffect } from 'react';
-import { fetchCouponById } from '@/admin/repositories/CouponRepository';
+import { getCouponById } from '@/admin/services/CouponService.ts';
 import { Coupon } from '@/models/Coupon';
 
 export function useCouponDetail(couponId: number) {
@@ -9,9 +9,9 @@ export function useCouponDetail(couponId: number) {
 
   useEffect(() => {
     setLoading(true);
-    fetchCouponById(couponId)
-      .then(response => {
-        setCoupon(Coupon.fromData(response.data));
+    getCouponById(couponId)
+      .then(data => {
+        setCoupon(data);
       })
       .catch(err => {
         console.error(err);

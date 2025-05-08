@@ -2,6 +2,7 @@ import http from '@/utils/http';
 import { ICategory } from '@/models/Category';
 import { IPagination, ISingleResponse } from '@/types/Response.ts';
 import { FilterParams } from '@/types/Params';
+import {ICategoryDto} from "@/admin/dtos/CategoryDto.ts";
 
 /**
  * Получить список категорий с пагинацией.
@@ -35,11 +36,11 @@ export async function fetchCategoryBySlug(
  * Создать новую категорию.
  */
 export async function storeCategory(
-  category: Partial<ICategory>
+  dto: ICategoryDto
 ): Promise<ISingleResponse<ICategory>> {
   const { data } = await http.post<ISingleResponse<ICategory>>(
     '/private/admin/categories',
-    category
+      dto
   );
   return data;
 }
@@ -49,11 +50,11 @@ export async function storeCategory(
  */
 export async function updateCategory(
   slug: string,
-  category: Partial<ICategory>
+  dto: ICategoryDto
 ): Promise<ISingleResponse<ICategory>> {
   const { data } = await http.put<ISingleResponse<ICategory>>(
     `/private/admin/categories/${slug}`,
-    category
+      dto
   );
   return data;
 }

@@ -5,7 +5,6 @@ export interface ICouponDto {
     amount: number;
 }
 
-// src/admin/dtos/ProductDto.ts
 export class CouponDto {
     constructor(
         public readonly code: string,
