@@ -12,7 +12,7 @@ export class OrderItem {
     constructor(
         public readonly product: Product,
         public readonly quantity: number,
-        public readonly total_amount: number,
+        public readonly totalAmount: number,
     ) {}
 
     public static fromData(data: IOrderItem): OrderItem {
@@ -41,8 +41,8 @@ export class Order {
         public readonly status: string,
         public readonly items: OrderItem[]|null,
         public readonly coupon: Coupon | null,
-        public readonly created_at: Date,
-        public readonly updated_at: Date
+        public readonly createdAt: Date,
+        public readonly updatedAt: Date
     ) {}
 
     public static fromData(data: IOrder): Order {

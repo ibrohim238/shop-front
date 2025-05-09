@@ -15,8 +15,8 @@ export class Coupon {
         public readonly description: string,
         public readonly type: string,
         public readonly amount: number,
-        public readonly created_at: Date,
-        public readonly updated_at: Date
+        public readonly createdAt: Date,
+        public readonly updatedAt: Date
     ) {}
 
     public static fromData(data: ICoupon): Coupon {

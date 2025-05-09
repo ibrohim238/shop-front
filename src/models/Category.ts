@@ -20,10 +20,10 @@ export class Category {
         public readonly slug: string,
         public readonly media: Media | null,
         public readonly description: string,
-        public readonly parent_id: number | null,
+        public readonly parentId: number | null,
         public readonly children: Category[]|null,
-        public readonly created_at: Date,
-        public readonly updated_at: Date
+        public readonly createdAt: Date,
+        public readonly updatedAt: Date
     ) {}
 
     public static fromData(data: ICategory): Category {

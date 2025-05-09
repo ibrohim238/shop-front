@@ -74,7 +74,7 @@ export default function CouponsPage(): ReactElement {
                                 <td className="px-4 py-2 text-sm text-gray-800">{coupon.type}</td>
                                 <td className="px-4 py-2 text-sm text-gray-800 text-right">{coupon.amount}</td>
                                 <td className="px-4 py-2 text-sm text-gray-800">
-                                    {new Date(coupon.created_at).toLocaleDateString('ru-RU')}
+                                    {new Date(coupon.createdAt).toLocaleDateString('ru-RU')}
                                 </td>
                                 <td className="px-4 py-2 text-center text-sm">
                                     <Link

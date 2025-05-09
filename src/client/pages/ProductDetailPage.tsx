@@ -103,7 +103,7 @@ export default function ProductDetailPage(): ReactElement {
                             <div className="text-sm text-gray-500">
                                 <p>
                                     <span className="font-medium">Создано:</span>{' '}
-                                    {new Date(product.created_at).toLocaleDateString('ru-RU', {
+                                    {new Date(product.createdAt).toLocaleDateString('ru-RU', {
                                         day: 'numeric',
                                         month: 'long',
                                         year: 'numeric',
@@ -111,7 +111,7 @@ export default function ProductDetailPage(): ReactElement {
                                 </p>
                                 <p>
                                     <span className="font-medium">Обновлено:</span>{' '}
-                                    {new Date(product.updated_at).toLocaleDateString('ru-RU', {
+                                    {new Date(product.updatedAt).toLocaleDateString('ru-RU', {
                                         day: 'numeric',
                                         month: 'long',
                                         year: 'numeric',

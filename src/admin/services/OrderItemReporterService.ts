@@ -67,6 +67,5 @@ export async function getMin(
 ): Promise<OrderItemReporter> {
   const params = castFilterParams(filter);
   const { data } = await fetchOrderMin(type, params);
-  console.log(data);
   return OrderItemReporter.fromData(data);
 }

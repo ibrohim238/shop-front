@@ -58,11 +58,11 @@ export default function CardProduct({ product }: Props): ReactElement {
             <div className="flex gap-6 text-sm text-gray-500">
                 <div>
                     Создано:{' '}
-                    {product.created_at.toLocaleDateString('ru-RU', { day: '2-digit', month: '2-digit', year: 'numeric' })}
+                    {product.createdAt.toLocaleDateString('ru-RU', { day: '2-digit', month: '2-digit', year: 'numeric' })}
                 </div>
                 <div>
                     Обновлено:{' '}
-                    {product.updated_at.toLocaleDateString('ru-RU', { day: '2-digit', month: '2-digit', year: 'numeric' })}
+                    {product.updatedAt.toLocaleDateString('ru-RU', { day: '2-digit', month: '2-digit', year: 'numeric' })}
                 </div>
             </div>
         </div>

@@ -14,8 +14,8 @@ export class Cart {
         public readonly id: number,
         public readonly product: Product,
         public readonly quantity: number,
-        public readonly created_at: Date,
-        public readonly updated_at: Date
+        public readonly createdAt: Date,
+        public readonly updatedAt: Date
     ) {}
 
     public static fromData(data: ICart): Cart {

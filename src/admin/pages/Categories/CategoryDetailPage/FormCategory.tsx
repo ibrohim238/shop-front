@@ -35,7 +35,7 @@ export default function FormCategory({ category, success }: Props): ReactElement
     description: category.description,
     media: category.media ? { id: category.media.id, url: category.media.url } : null,
     newMedia: null,
-    parentId: category.parent_id,
+    parentId: category.parentId,
   })
   const [errors, setErrors] = useState<FormErrors>({})
   const [saving, setSaving] = useState(false)

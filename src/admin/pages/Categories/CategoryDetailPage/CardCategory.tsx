@@ -30,7 +30,7 @@ export default function CardCategory({ category }: Props): ReactElement {
       <div className="flex gap-6 text-sm text-gray-500">
         <div>
           Создана:{' '}
-          {category.created_at.toLocaleDateString('ru-RU', {
+          {category.createdAt.toLocaleDateString('ru-RU', {
             day: '2-digit',
             month: '2-digit',
             year: 'numeric',
@@ -38,7 +38,7 @@ export default function CardCategory({ category }: Props): ReactElement {
         </div>
         <div>
           Обновлена:{' '}
-          {category.updated_at.toLocaleDateString('ru-RU', {
+          {category.updatedAt.toLocaleDateString('ru-RU', {
             day: '2-digit',
             month: '2-digit',
             year: 'numeric',

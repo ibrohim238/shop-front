@@ -22,8 +22,8 @@ export class Product {
         public readonly quantity: number,
         public readonly medias: Media[],
         public readonly categories: Category[] | null,
-        public readonly created_at: Date,
-        public readonly updated_at: Date
+        public readonly createdAt: Date,
+        public readonly updatedAt: Date
     ) {}
 
     public static fromData(data: IProduct): Product {

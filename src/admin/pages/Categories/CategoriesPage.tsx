@@ -72,7 +72,7 @@ export default function CategoriesPage(): ReactElement {
                 <td className="px-4 py-2 text-sm text-gray-800">{c.name}</td>
                 <td className="px-4 py-2 text-sm text-gray-800">{c.description || '—'}</td>
                 <td className="px-4 py-2 text-sm text-gray-800">
-                  {new Date(c.created_at).toLocaleDateString('ru-RU')}
+                  {new Date(c.createdAt).toLocaleDateString('ru-RU')}
                 </td>
                 <td className="px-4 py-2 text-center">
                   <Link

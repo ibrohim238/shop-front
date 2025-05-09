@@ -12,11 +12,11 @@ export class Media {
     constructor(
         public readonly id: number,
         public readonly name: string,
-        public readonly mime_type: string,
-        public readonly collection_name: string,
+        public readonly mimeType: string,
+        public readonly collectionName: string,
         public readonly url: string,
         public readonly disk: string,
-        public readonly created_at: string
+        public readonly createdAt: string
     ) {}
 
     public static fromData(data: IMedia): Media {

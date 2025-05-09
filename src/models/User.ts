@@ -15,12 +15,12 @@ export interface IUser {
 export class User {
     constructor(
         public readonly id: number,
-        public readonly first_name: string,
-        public readonly last_name: string,
+        public readonly firstName: string,
+        public readonly lastName: string,
         public readonly email: string,
         public readonly roles: IRole[],
-        public readonly created_at: Date,
-        public readonly updated_at: Date
+        public readonly createdAt: Date,
+        public readonly updatedUt: Date
     ) {}
 
     public static fromData(data: IUser): User {

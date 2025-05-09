@@ -20,11 +20,11 @@ export default function CardOrder({ order }: Props): ReactElement {
           <p><span className="font-medium">Статус:</span> {order.status}</p>
           <p>
             <span className="font-medium">Создан:</span>{' '}
-            {order.created_at.toLocaleString('ru-RU')}
+            {order.createdAt.toLocaleString('ru-RU')}
           </p>
           <p>
             <span className="font-medium">Обновлён:</span>{' '}
-            {order.updated_at.toLocaleString('ru-RU')}
+            {order.updatedAt.toLocaleString('ru-RU')}
           </p>
           <p>
             <span className="font-medium">Купон:</span>{' '}

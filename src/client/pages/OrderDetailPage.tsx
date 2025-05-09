@@ -110,7 +110,7 @@ export default function OrderDetailPage(): ReactElement {
                     <div className="text-sm text-gray-500 space-y-1">
                         <p>
                             <span className="font-medium">Создан:</span>{' '}
-                            {order.created_at.toLocaleDateString('ru-RU', {
+                            {order.createdAt.toLocaleDateString('ru-RU', {
                                 day: 'numeric',
                                 month: 'long',
                                 year: 'numeric',
@@ -118,7 +118,7 @@ export default function OrderDetailPage(): ReactElement {
                         </p>
                         <p>
                             <span className="font-medium">Обновлён:</span>{' '}
-                            {order.updated_at.toLocaleDateString('ru-RU', {
+                            {order.updatedAt.toLocaleDateString('ru-RU', {
                                 day: 'numeric',
                                 month: 'long',
                                 year: 'numeric',
