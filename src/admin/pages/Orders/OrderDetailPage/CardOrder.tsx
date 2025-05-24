@@ -34,10 +34,10 @@ export default function CardOrder({ order }: Props): ReactElement {
         <div>
           <h3 className="font-medium mb-2">Товары в заказе:</h3>
           <ul className="list-disc list-inside space-y-1">
-            {order.items.map(item => (
+            {order.items?.map(item => (
               <li key={item.product.id}>
                 {item.product.name} × {item.quantity}{' '}
-                ({item.total_amount.toLocaleString('ru-RU', {
+                ({item.totalAmount.toLocaleString('ru-RU', {
                   style: 'currency',
                   currency: 'RUB'
                 })})

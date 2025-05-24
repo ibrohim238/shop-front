@@ -12,10 +12,11 @@ import OrdersPage from "@/admin/pages/Orders/OrdersPage.tsx";
 import OrdersDetailsPage from "@/admin/pages/Orders/OrderDetailPage";
 import RequireAdmin from "@/routes/RequireAdmin.tsx";
 import AdminLayout from "@/layouts/AdminLayout.tsx";
+import RequireAuth from "@/routes/RequireAuth.tsx";
 
 export default function AdminRoutes() {
     return (
-        <Route element={<RequireAdmin/>}>
+        <Route element={<RequireAuth/>}>
             <Route element={<RequireAdmin/>}>
                 <Route element={<AdminLayout/>} path="admin">
                     <Route index element={<ProductsPage/>}/>
