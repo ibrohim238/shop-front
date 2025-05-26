@@ -7,11 +7,28 @@ interface PaginatorProps {
 }
 
 export default function PaginatorComponent({
-                                      currentPage,
-                                      lastPage,
-                                      onPageChange,
-                                  }: PaginatorProps): ReactElement {
-    const pages = Array.from({ length: lastPage }, (_, i) => i + 1);
+    currentPage,
+    lastPage,
+    onPageChange,
+}: PaginatorProps): ReactElement {
+    const maxPagesToShow = 8;
+    let startPage = currentPage - Math.floor(maxPagesToShow / 2);
+    let endPage = startPage + maxPagesToShow - 1;
+
+    if (startPage < 1) {
+        startPage = 1;
+        endPage = Math.min(lastPage, maxPagesToShow);
+    }
+
+    if (endPage > lastPage) {
+        endPage = lastPage;
+        startPage = Math.max(1, lastPage - maxPagesToShow + 1);
+    }
+
+    const pages = Array.from(
+        { length: endPage - startPage + 1 },
+        (_, i) => startPage + i
+    );
 
     return (
         <div className="flex justify-center mt-8 space-x-2">
