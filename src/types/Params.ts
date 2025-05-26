@@ -1,5 +1,5 @@
 export interface FilterParams {
-    [key: string]: number | string;
+    [key: string]: number | string | null;
 }
 
 export function castFilterParams(filter: FilterParams) {

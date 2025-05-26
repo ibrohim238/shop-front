@@ -7,8 +7,7 @@ import { useProductDetail } from '@/admin/pages/Products/ProductDetailPage/usePr
 import FormProduct from "@/admin/pages/Products/ProductDetailPage/FormProduct";
 import { Product } from "@/models/Product";
 import { deleteProduct } from '@/admin/services/ProductService';
-import ProductOrderChart from "@/admin/pages/Products/ProductDetailPage/ProductOrderChart.tsx";
-import ProductOrderMetrics from "@/admin/pages/Products/ProductDetailPage/ProductOrderMetrics";
+import {ProductOrderDashboard} from "@/admin/pages/Products/ProductDetailPage/ProductOrderDashboard.tsx";
 
 export default function AdminProductDetailPage(): ReactElement {
     const { id } = useParams<{ id: string }>();
@@ -49,8 +48,7 @@ export default function AdminProductDetailPage(): ReactElement {
                 : (
                     <>
                         <CardProduct product={product} />
-                        <ProductOrderChart productId={productId} />
-                        <ProductOrderMetrics productId={productId}/>
+                        <ProductOrderDashboard productId={productId}/>
                     </>
                 )
             }

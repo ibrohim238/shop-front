@@ -7,6 +7,8 @@ import { useProductOrderCharts } from './useProductOrderCharts'
 
 interface Props {
   productId: number
+  /** Диапазон дат [начальная, конечная], если null – будет вычислен по периоду */
+  dateRange: string[]|null
 }
 
 interface ChartData {
@@ -24,12 +26,46 @@ const PERIODS: { label: string; value: Period }[] = [
   { label: 'Год', value: 'year' },
 ];
 
-export default function ProductOrderChart({ productId }: Props): ReactElement {
+export default function ProductOrderChart({
+  productId,
+  dateRange,
+}: Props): ReactElement {
   const [period, setPeriod] = useState<Period>('day')
+
+  // вычисляем дефолтный диапазон дат по выбранному периоду
+  const computeDateRange = (date: string[]|null, format: Period): string[] => {
+    if (date && 0 in date && 1 in date) {
+      return date;
+    }
+
+    const now = new Date()
+    const nowStr = now.toISOString().slice(0, 10)
+    const past = new Date(now)
+    switch (format) {
+      case 'week':
+        past.setMonth(past.getMonth() - 3)
+        break
+      case 'month':
+        past.setMonth(past.getMonth() - 12)
+        break
+      case 'year':
+        past.setFullYear(past.getFullYear() - 6)
+        break
+      default:
+        past.setDate(past.getDate() - 30)
+    }
+    const pastStr = past.toISOString().slice(0, 10)
+    return [pastStr, nowStr]
+  }
+
+  // если dateRange не передан, используем вычисленный
+  dateRange =  computeDateRange(dateRange, period);
+
   const { charts, loading, error } = useProductOrderCharts(
     productId,
     period,
     'product',
+      dateRange,
   )
 
   if (loading) return <LoadingComponent />

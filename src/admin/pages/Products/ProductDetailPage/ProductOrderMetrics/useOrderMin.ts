@@ -1,7 +1,10 @@
 import { useState, useEffect } from 'react'
 import { getMin } from '@/admin/services/OrderItemReporterService'
 
-export function useOrderMin(productId: number) {
+export function useOrderMin(
+    productId: number,
+    dateRange: string[]|null,
+) {
   const [value, setValue] = useState<number>(0)
   const [loading, setLoading] = useState<boolean>(true)
   const [error, setError] = useState<string | null>(null)
@@ -9,11 +12,11 @@ export function useOrderMin(productId: number) {
   useEffect(() => {
     setLoading(true)
     setError(null)
-    getMin('product', { model_id: productId })
+    getMin('product', { model_id: productId, date: dateRange?.join(',') ?? null })
       .then(r => setValue(r.quantity))
       .catch(e => setError(e.message || 'Ошибка'))
       .finally(() => setLoading(false))
-  }, [productId])
+  }, [productId, dateRange])
 
   return { value, loading, error }
 }

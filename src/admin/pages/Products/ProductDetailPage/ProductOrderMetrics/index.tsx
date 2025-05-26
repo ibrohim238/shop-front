@@ -7,14 +7,15 @@ import { useOrderMax } from '@/admin/pages/Products/ProductDetailPage/ProductOrd
 import { useOrderMin } from '@/admin/pages/Products/ProductDetailPage/ProductOrderMetrics/useOrderMin'
 
 interface Props {
-  productId: number
+  productId: number,
+  dateRange: string[]|null,
 }
 
-export default function ProductOrderMetrics({ productId }: Props): ReactElement {
-  const sum = useOrderSum(productId)
-  const avg = useOrderAvg(productId)
-  const max = useOrderMax(productId)
-  const min = useOrderMin(productId)
+export default function ProductOrderMetrics({ productId, dateRange }: Props): ReactElement {
+  const sum = useOrderSum(productId, dateRange);
+  const avg = useOrderAvg(productId, dateRange);
+  const max = useOrderMax(productId, dateRange);
+  const min = useOrderMin(productId, dateRange);
 
   const cards = [
     { title: 'Суммарное количество', ...sum },

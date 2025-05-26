@@ -5,6 +5,15 @@ interface Props {
   coupon: Coupon;
 }
 
+function localizeType(type: number): string | undefined {
+  const words: { [key: number]: string } = {
+    0: 'Фиксированная скидка',
+    1: 'Процентная скидка',
+  };
+
+  return words[type];
+}
+
 export default function CardCoupon({ coupon }: Props): ReactElement {
   return (
     <div className="bg-white shadow rounded-lg p-6">
@@ -20,10 +29,23 @@ export default function CardCoupon({ coupon }: Props): ReactElement {
           <span className="font-medium">Описание:</span> {coupon.description}
         </p>
         <p>
-          <span className="font-medium">Тип:</span> {coupon.type}
+          <span className="font-medium">Тип:</span>{' '}
+          {localizeType(coupon.type)}
         </p>
         <p>
           <span className="font-medium">Сумма:</span> {coupon.amount}
+        </p>
+        <p>
+          <span className="font-medium">Минимальная сумма:</span> {coupon.minPrice}
+        </p>
+        <p>
+          <span className="font-medium">Количество разрешенных использований:</span> {coupon.quantityAllowed}
+        </p>
+        <p>
+          <span className="font-medium">Количество использований:</span> {coupon.quantityUsed}
+        </p>
+        <p>
+          <span className="font-medium">Дата истечения:</span> {coupon.expiresDate?.toISOString()}
         </p>
       </div>
     </div>
