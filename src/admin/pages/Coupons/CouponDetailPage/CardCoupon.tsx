@@ -7,8 +7,8 @@ interface Props {
 
 function localizeType(type: number): string | undefined {
   const words: { [key: number]: string } = {
-    0: 'Фиксированная скидка',
-    1: 'Процентная скидка',
+    0: 'Фиксированный',
+    1: 'Процентный',
   };
 
   return words[type];

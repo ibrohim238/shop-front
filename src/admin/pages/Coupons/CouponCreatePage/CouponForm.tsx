@@ -159,8 +159,8 @@ export default function CouponForm({ success }: Props): ReactElement {
             placeholder="Выберите тип..."
             loadOptions={async (input, _, { page }) => {
               const all: Option<number>[] = [
-                { value: 0, label: 'Фиксированная скидка' },
-                { value: 1, label: 'Процентная скидка' },
+                { value: 0, label: 'Фиксированный' },
+                { value: 1, label: 'Процентный' },
               ]
               const filtered = all.filter(o =>
                 o.label.toLowerCase().includes(input.toLowerCase())
