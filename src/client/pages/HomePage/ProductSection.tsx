@@ -56,11 +56,11 @@ export default function ProductSection({
             to={`/products/${p.id}`}
             className="group block bg-white shadow-md rounded-lg overflow-hidden hover:shadow-lg transition-shadow"
           >
-            {p.medias[0]?.url ? (
+             {p.medias[0]?.url ? (
               <img
                 src={p.medias[0].url}
                 alt={p.name}
-                className="w-full h-48 object-cover"
+                className="w-full h-48 object-contain bg-gray-100"
               />
             ) : (
               <div className="w-full h-48 bg-gray-200 flex items-center justify-center">

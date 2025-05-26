@@ -64,7 +64,7 @@ export default function ProductDetailPage(): ReactElement {
                         <img
                             src={product.medias[0].url}
                             alt={product.name}
-                            className="w-full h-80 object-cover"
+                            className="w-full h-80 object-contain bg-gray-100"
                         />
                     ) : (
                         <div className="w-full h-80 bg-gray-100 flex items-center justify-center">
