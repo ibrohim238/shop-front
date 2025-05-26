@@ -1,10 +1,8 @@
 // src/pages/LoginPage.tsx
 import { useState, ReactElement, FormEvent } from 'react';
-import { useNavigate } from 'react-router';
 import {useAuth} from "@/common/context/provider/AuthContextProvider.tsx";
 
 export default function LoginPage(): ReactElement {
-    const navigate = useNavigate();
     const { login } = useAuth();
 
     const [username, setUsername] = useState<string>('');
@@ -18,7 +16,6 @@ export default function LoginPage(): ReactElement {
         setError(null);
         try {
             await login(username, password);
-            navigate('/', { replace: true });
         } catch {
             setError('Неверное имя пользователя или пароль');
         } finally {
