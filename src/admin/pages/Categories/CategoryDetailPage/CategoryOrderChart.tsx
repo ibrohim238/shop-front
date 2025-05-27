@@ -7,6 +7,8 @@ import { useCategoryOrderCharts } from './useCategoryOrderCharts'
 
 interface Props {
   categoryId: number
+  /** Диапазон дат [начальная, конечная], если null – будет вычислен по периоду */
+  dateRange: string[] | null
 }
 
 interface ChartData {
@@ -15,23 +17,54 @@ interface ChartData {
   quantity: number
 }
 
-type Period = 'day' | 'week' | 'month' | 'year';
+type Period = 'day' | 'week' | 'month' | 'year'
 
 const PERIODS: { label: string; value: Period }[] = [
   { label: 'День', value: 'day' },
   { label: 'Неделя', value: 'week' },
   { label: 'Месяц', value: 'month' },
   { label: 'Год', value: 'year' },
-];
+]
 
 export default function CategoryOrderChart({
   categoryId,
+  dateRange,
 }: Props): ReactElement {
   const [period, setPeriod] = useState<Period>('day')
+
+  // вычисляем дефолтный диапазон дат по выбранному периоду
+  const computeDateRange = (date: string[] | null, format: Period): string[] => {
+    if (date && date.length === 2) {
+      return date
+    }
+    const now = new Date()
+    const nowStr = now.toISOString().slice(0, 10)
+    const past = new Date(now)
+    switch (format) {
+      case 'week':
+        past.setMonth(past.getMonth() - 3)
+        break
+      case 'month':
+        past.setMonth(past.getMonth() - 12)
+        break
+      case 'year':
+        past.setFullYear(past.getFullYear() - 6)
+        break
+      default:
+        past.setDate(past.getDate() - 30)
+    }
+    const pastStr = past.toISOString().slice(0, 10)
+    return [pastStr, nowStr]
+  }
+
+  // если dateRange не передан, используем вычисленный
+  dateRange = computeDateRange(dateRange, period)
+
   const { charts, loading, error } = useCategoryOrderCharts(
     categoryId,
     period,
     'category',
+    dateRange,
   )
 
   if (loading) return <LoadingComponent />

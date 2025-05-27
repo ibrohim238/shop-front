@@ -1,7 +1,10 @@
 import { useState, useEffect } from 'react'
 import { getAvg } from '@/admin/services/OrderItemReporterService'
 
-export function useOrderAvg(categoryId: number) {
+export function useOrderAvg(
+    productId: number,
+    dateRange: string[]|null,
+) {
   const [value, setValue] = useState<number>(0)
   const [loading, setLoading] = useState<boolean>(true)
   const [error, setError] = useState<string | null>(null)
@@ -9,11 +12,11 @@ export function useOrderAvg(categoryId: number) {
   useEffect(() => {
     setLoading(true)
     setError(null)
-    getAvg('category', { model_id: categoryId })
-      .then(res => setValue(res.quantity))
-      .catch(e => setError(e.message || 'Ошибка при загрузке среднего'))
-      .finally(() => setLoading(false))
-  }, [categoryId])
+    getAvg('product', { model_id: productId, date: dateRange?.join(',') ?? null })
+        .then(r => setValue(r.quantity))
+        .catch(e => setError(e.message || 'Ошибка'))
+        .finally(() => setLoading(false))
+  }, [productId, dateRange])
 
   return { value, loading, error }
 }

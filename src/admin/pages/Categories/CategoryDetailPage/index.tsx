@@ -7,8 +7,7 @@ import CardCategory from './CardCategory';
 import FormCategory from './FormCategory';
 import { Category } from '@/models/Category';
 import { deleteCategory } from '@/admin/services/CategoryService';
-import CategoryOrderChart from './CategoryOrderChart';
-import CategoryOrderMetrics from "@/admin/pages/Categories/CategoryDetailPage/CategoryOrderMetrics";
+import {CategoryOrderDashboard} from "@/admin/pages/Categories/CategoryDetailPage/CategoryOrderDashboard.tsx";
 
 export default function Index(): ReactElement {
   const { slug } = useParams<{ slug: string }>();
@@ -49,8 +48,7 @@ export default function Index(): ReactElement {
       ) : (
         <>
           <CardCategory category={category} />
-          <CategoryOrderChart categoryId={category.id} />
-          <CategoryOrderMetrics categoryId={category.id}/>
+          <CategoryOrderDashboard categoryId={category.id} />
         </>
       )}
 
